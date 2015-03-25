@@ -11,7 +11,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.logging.Handler;
 
 public class SampleFragment extends Fragment {
 
@@ -32,27 +40,79 @@ public class SampleFragment extends Fragment {
         position = getArguments().getInt(ARG_POSITION);
         View rootView = inflater.inflate(R.layout.page, container, false);
 
-        RecyclerView mRecyclerView;
-        ArrayList<PostListStruct> mDataset;
-        mDataset = Refresh.RefreshList();
+        final RecyclerView mRecyclerView;
+        final ArrayAdapter mAdapter;
+
+        final ArrayList<PostListStruct> mDataset;
+//        mDataset = Refresh.RefreshList();
+        mDataset = new ArrayList<PostListStruct>();
+        PostListStruct list;
+        list = new PostListStruct("aaa", "aaa", "aaa", "aaa", "aaa", "aaa");
+        mDataset.add(list);
+        list = new PostListStruct("bbb", "bbb", "bbb", "bbb", "bbb", "bbb");
+        mDataset.add(list);
+
 
         mRecyclerView = (RecyclerView)rootView.findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(inflater.getContext()));
-        mRecyclerView.setAdapter(new ArrayAdapter(inflater.getContext(), mDataset));
+        mAdapter = new ArrayAdapter(inflater.getContext(), mDataset);
+        mRecyclerView.setAdapter(mAdapter);
 
         final PullRefreshLayout layout;
         layout = (PullRefreshLayout)rootView.findViewById(R.id.swipeRefreshLayout);
         layout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                layout.postDelayed(new Runnable() {
+                Thread thread = new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        layout.setRefreshing(false);
+                        ArrayList<PostListStruct> lists = new ArrayList<PostListStruct>();
+
+                        try {
+                            String url = "https://v2ex.com/?tab=hot";
+                            URL baseURL = new URL(url);
+                            Document doc = Jsoup.connect(url).get();
+
+                            Elements cellitems = doc.select("div.cell.item");
+
+                            for (Element cellitem : cellitems) {
+                                String[] smallFade = cellitem.select("span.small.fade").text().split("•");
+                                String a = cellitem.select("span.item_title").text();
+                                String b = smallFade[1].replace(String.valueOf((char) 160), " ").trim();
+                                String c = smallFade[2].replace(String.valueOf((char) 160), " ").trim();
+                                String d = smallFade[0].replace(String.valueOf((char) 160), " ").trim();
+                                String e = cellitem.select("img.avatar").attr("src");
+                                String f = cellitem.select("span.item_title>a").attr("href");
+                                URL temp1 = new URL(baseURL, e);
+                                URL temp2 = new URL(baseURL, f);
+                                e = temp1.toString();
+                                f = temp2.toString();
+                                PostListStruct list = new PostListStruct(a, b, c, d, e, f);
+                                lists.add(list);
+                            }
+
+                            mAdapter.setmArray(lists);
+
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mAdapter.notifyDataSetChanged();
+                                    layout.setRefreshing(false);
+                                }
+                            });
+
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
                     }
-                }, 4000);
+                });
+                thread.start();
+
             }
         });
+
 
         FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fabButton);
         fab.setDrawableIcon(getResources().getDrawable(R.drawable.plus));
@@ -102,6 +162,10 @@ public class SampleFragment extends Fragment {
         public int getItemCount() {
             return mArray.size();
         }
+
+        public void setmArray (ArrayList<PostListStruct> newArray) {
+            mArray = newArray;
+        }
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{
@@ -122,5 +186,6 @@ public class SampleFragment extends Fragment {
             image = (ImageView)itemView.findViewById(R.id.imageview);
         }
     }
+
 
 }
