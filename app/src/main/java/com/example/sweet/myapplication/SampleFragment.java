@@ -71,7 +71,7 @@ public class SampleFragment extends Fragment {
                         try {
                             String url = "https://v2ex.com/?tab=hot";
                             URL baseURL = new URL(url);
-                            Document doc = Jsoup.connect(url).get();
+                            Document doc = Jsoup.connect(url).timeout(4000).get();
 
                             Elements cellitems = doc.select("div.cell.item");
 
@@ -104,6 +104,12 @@ public class SampleFragment extends Fragment {
 
                         } catch (IOException e) {
                             e.printStackTrace();
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    layout.setRefreshing(false);
+                                }
+                            });
                         }
 
                     }
