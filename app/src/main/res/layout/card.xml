@@ -16,7 +16,9 @@
         card_view:contentPaddingLeft="10dp"
         card_view:contentPaddingRight="10dp"
         card_view:contentPaddingBottom="0dp"
-        android:layout_margin="10dp">
+        android:layout_margin="5dp"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground">
 
         <LinearLayout
             android:orientation="vertical"

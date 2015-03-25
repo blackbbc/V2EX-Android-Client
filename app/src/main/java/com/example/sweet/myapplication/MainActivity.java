@@ -79,29 +79,6 @@ public class MainActivity extends Activity {
             }
         });
 
-
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Document doc = Jsoup.connect("https://v2ex.com/?tab=hot").get();
-
-                    Element titleElement = doc.select("span.item_title>a").first();
-                    String title = titleElement.text();
-                    Element avatarElement = doc.select("img.avatar").first();
-                    String avatar = avatarElement.attr("src");
-                    avatar = "https:" + avatar;
-
-                    handler.obtainMessage(0, avatar).sendToTarget();
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        thread.start();
-
     }
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {

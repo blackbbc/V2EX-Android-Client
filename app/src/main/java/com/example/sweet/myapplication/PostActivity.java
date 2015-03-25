@@ -2,6 +2,7 @@ package com.example.sweet.myapplication;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.transition.Explode;
@@ -14,6 +15,8 @@ import android.view.ViewAnimationUtils;
 import android.view.Window;
 import android.widget.TextView;
 
+import com.example.sweet.myapplication.transition.RevealTransition;
+
 
 public class PostActivity extends ActionBarActivity {
 
@@ -24,10 +27,15 @@ public class PostActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
 
-        getWindow().setEnterTransition(new Slide());
-        getWindow().setReturnTransition(new Slide());
+        Intent intent = getIntent();
+        float locationX = intent.getFloatExtra("locationX", 0f);
+        float locationY = intent.getFloatExtra("locationY", 0f);
 
-        tv1 = (TextView)findViewById(R.id.textView2);
+        RevealTransition reveal = new RevealTransition(locationX, locationY);
+        reveal.addTarget(R.id.card_view);
+
+        getWindow().setEnterTransition(reveal);
+        getWindow().setReturnTransition(reveal);
 
     }
 

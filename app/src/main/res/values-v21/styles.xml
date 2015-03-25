@@ -11,5 +11,7 @@
 
         <item name="windowActionBar">false</item>
 
+        <item name="android:colorControlHighlight">#2196F3</item>
+
     </style>
 </resources>

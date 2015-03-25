@@ -3,11 +3,29 @@ package com.example.sweet.myapplication;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
+
+import java.util.ArrayList;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     final int PAGE_COUNT =12;
     private String titles[] ;
+    private ArrayList<SampleFragment> lists;
+    private String[] urls = {
+            "https://v2ex.com/?tab=tech",
+            "https://v2ex.com/?tab=creative",
+            "https://v2ex.com/?tab=play",
+            "https://v2ex.com/?tab=apple",
+            "https://v2ex.com/?tab=jobs",
+            "https://v2ex.com/?tab=deals",
+            "https://v2ex.com/?tab=city",
+            "https://v2ex.com/?tab=qna",
+            "https://v2ex.com/?tab=hot",
+            "https://v2ex.com/?tab=all",
+            "https://v2ex.com/?tab=r2",
+            "https://v2ex.com/?tab=nodes"
+    };
 
     public ViewPagerAdapter(FragmentManager fm, String[] titles2) {
         super(fm);
@@ -16,34 +34,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        switch (position) {
-            // Open FragmentTab1.java
-            case 0:
-                return SampleFragment.newInstance(position);
-            case 1:
-                return SampleFragment.newInstance(position);
-            case 2:
-                return SampleFragment.newInstance(position);
-            case 3:
-                return SampleFragment.newInstance(position);
-            case 4:
-                return SampleFragment.newInstance(position);
-            case 5:
-                return SampleFragment.newInstance(position);
-            case 6:
-                return SampleFragment.newInstance(position);
-            case 7:
-                return SampleFragment.newInstance(position);
-            case 8:
-                return SampleFragment.newInstance(position);
-            case 9:
-                return SampleFragment.newInstance(position);
-            case 10:
-                return SampleFragment.newInstance(position);
-            case 11:
-                return SampleFragment.newInstance(position);
-        }
-        return null;
+        return SampleFragment.newInstance(position, urls[position]);
     }
 
     public CharSequence getPageTitle(int position) {

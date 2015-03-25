@@ -1,11 +1,15 @@
 package com.example.sweet.myapplication;
 
+import android.app.ActivityOptions;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -19,6 +23,7 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Handler;
 
 public class SampleFragment extends Fragment {
@@ -26,37 +31,65 @@ public class SampleFragment extends Fragment {
     private static final String ARG_POSITION = "position";
 
     private int position;
+    private String url;
 
-    public static SampleFragment newInstance(int position) {
+    public static SampleFragment newInstance(int position, String url) {
         SampleFragment f = new SampleFragment();
         Bundle b = new Bundle();
         b.putInt(ARG_POSITION, position);
+        b.putString("url", url);
         f.setArguments(b);
         return f;
+    }
+
+    private ArrayList<PostListStruct> getDataFromSqlite() {
+        ArrayList<PostListStruct> lists = new ArrayList<PostListStruct>();
+
+
+        return lists;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         position = getArguments().getInt(ARG_POSITION);
+        url = getArguments().getString("url");
+
         View rootView = inflater.inflate(R.layout.page, container, false);
 
         final RecyclerView mRecyclerView;
         final ArrayAdapter mAdapter;
 
         final ArrayList<PostListStruct> mDataset;
-//        mDataset = Refresh.RefreshList();
-        mDataset = new ArrayList<PostListStruct>();
-        PostListStruct list;
-        list = new PostListStruct("aaa", "aaa", "aaa", "aaa", "aaa", "aaa");
-        mDataset.add(list);
-        list = new PostListStruct("bbb", "bbb", "bbb", "bbb", "bbb", "bbb");
-        mDataset.add(list);
 
+        mDataset = getDataFromSqlite();
 
         mRecyclerView = (RecyclerView)rootView.findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(inflater.getContext()));
         mAdapter = new ArrayAdapter(inflater.getContext(), mDataset);
         mRecyclerView.setAdapter(mAdapter);
+
+        mRecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+                View childView = rv.findChildViewUnder(e.getX(), e.getY());
+                if (e.getAction() == MotionEvent.ACTION_UP && childView != null) {
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity(), PostActivity.class);
+                    intent.putExtra("locationX", e.getX());
+                    intent.putExtra("locationY", e.getY());
+                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity());
+                    getActivity().startActivity(intent, options.toBundle());
+                    return true;
+                }
+
+                return false;
+            }
+
+            @Override
+            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+            }
+        });
 
         final PullRefreshLayout layout;
         layout = (PullRefreshLayout)rootView.findViewById(R.id.swipeRefreshLayout);
@@ -69,17 +102,22 @@ public class SampleFragment extends Fragment {
                         ArrayList<PostListStruct> lists = new ArrayList<PostListStruct>();
 
                         try {
-                            String url = "https://v2ex.com/?tab=hot";
                             URL baseURL = new URL(url);
                             Document doc = Jsoup.connect(url).timeout(4000).get();
 
                             Elements cellitems = doc.select("div.cell.item");
 
                             for (Element cellitem : cellitems) {
+                                String temp = cellitem.select("span.small.fade").text();
                                 String[] smallFade = cellitem.select("span.small.fade").text().split("•");
                                 String a = cellitem.select("span.item_title").text();
                                 String b = smallFade[1].replace(String.valueOf((char) 160), " ").trim();
-                                String c = smallFade[2].replace(String.valueOf((char) 160), " ").trim();
+
+                                //FUCK!
+                                int spacePosition = b.indexOf(" ");
+                                String c = b.substring(spacePosition);
+                                b = b.substring(0, spacePosition);
+
                                 String d = smallFade[0].replace(String.valueOf((char) 160), " ").trim();
                                 String e = cellitem.select("img.avatar").attr("src");
                                 String f = cellitem.select("span.item_title>a").attr("href");
@@ -122,20 +160,7 @@ public class SampleFragment extends Fragment {
 
         FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fabButton);
         fab.setDrawableIcon(getResources().getDrawable(R.drawable.plus));
-        switch (position) {
-            case 0:
-                fab.setBackgroundColor(getResources().getColor(R.color.material_deep_teal_500));
-                break;
-            case 1:
-                fab.setBackgroundColor(getResources().getColor(R.color.red));
-                break;
-            case 2:
-                fab.setBackgroundColor(getResources().getColor(R.color.blue));
-                break;
-            case 3:
-                fab.setBackgroundColor(getResources().getColor(R.color.material_blue_grey_800));
-                break;
-        }
+        fab.setBackgroundColor(getResources().getColor(R.color.material_deep_teal_500));
 
         return rootView;
     }
