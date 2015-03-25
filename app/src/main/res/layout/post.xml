@@ -34,25 +34,6 @@
             android:id="@+id/postcontent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="现在有桌面1、2
-
-我想在1桌面打开“邮件.app”，选择分配“无”，选择“PHP”邮件列表，只查看关于PHP的邮件
-
-这时候我想：在2桌面打开“邮件.app”，选择“Python”邮件列表，只查看关于Python的邮件
-
-可惜：我在2桌面点击“邮件.app”的时候桌面就会跳转到桌面1。
-
-也就是说，桌面不能独立运行某个app，那“多桌面”，不就是“最大化显示”么？
-
-----------------------------------
-
-另外：Chrome倒是可以给每个桌面分配不同的窗口，
-
-我在这个1桌面点击Chrome.app是百度，在2桌面点击Chrome.app是Google
-
-这就是我想要的效果，
-
-但是别的app貌似都不能独立运行在某个桌面，在2桌面点击1桌面已经打开的app，又会跳转到桌面1"
             android:textColor="#005465"
             android:textSize="@dimen/abc_text_size_body_1_material" />
 

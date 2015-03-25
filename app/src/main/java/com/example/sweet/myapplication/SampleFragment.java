@@ -3,6 +3,9 @@ package com.example.sweet.myapplication;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,15 +18,21 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.nostra13.universalimageloader.core.ImageLoader;
+
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.logging.Handler;
 
 public class SampleFragment extends Fragment {
@@ -69,24 +78,62 @@ public class SampleFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
 
         mRecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            private static final int MAX_CLICK_DURATION = 200;
+            private static final int MAX_CLICK_DISTANCE = 15;
+            private long startClickTime;
+            private float pressedX, pressedY;
+
             @Override
             public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
                 View childView = rv.findChildViewUnder(e.getX(), e.getY());
-                if (e.getAction() == MotionEvent.ACTION_UP && childView != null) {
-                    Intent intent = new Intent();
-                    intent.setClass(getActivity(), PostActivity.class);
-                    intent.putExtra("locationX", e.getX());
-                    intent.putExtra("locationY", e.getY());
-                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity());
-                    getActivity().startActivity(intent, options.toBundle());
-                    return true;
+                int position = rv.getChildPosition(childView);
+
+                switch (e.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        startClickTime = Calendar.getInstance().getTimeInMillis();
+                        pressedX = e.getX();
+                        pressedY = e.getY();
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP: {
+                        long clickDuration = Calendar.getInstance().getTimeInMillis() - startClickTime;
+                        if(childView != null && clickDuration < MAX_CLICK_DURATION && distance(pressedX, pressedY, e.getX(), e.getY()) < MAX_CLICK_DISTANCE) {
+                            //click event has occurred
+
+                            PostListStruct list = mAdapter.getItem(position);
+
+                            Intent intent = new Intent();
+                            intent.setClass(getActivity(), PostActivity.class);
+                            intent.putExtra("locationX", e.getRawX());
+                            intent.putExtra("locationY", e.getRawY());
+                            intent.putExtra("position", position);
+                            Gson gson = new Gson();
+                            String json = gson.toJson(mAdapter.getItem(position));
+                            intent.putExtra("json", json);
+                            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity());
+                            getActivity().startActivity(intent, options.toBundle());
+                            return true;
+                        }
+                    }
                 }
 
                 return false;
             }
 
+            private float distance(float x1, float y1, float x2, float y2) {
+                float dx = x1 - x2;
+                float dy = y1 - y2;
+                float distanceInPx = (float) Math.sqrt(dx * dx + dy * dy);
+                return pxToDp(distanceInPx);
+            }
+
+            private float pxToDp(float px) {
+                return px / getResources().getDisplayMetrics().density;
+            }
+
             @Override
             public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
 
             }
         });
@@ -165,7 +212,7 @@ public class SampleFragment extends Fragment {
         return rootView;
     }
 
-    static class ArrayAdapter extends RecyclerView.Adapter<ViewHolder>{
+    class ArrayAdapter extends RecyclerView.Adapter<ViewHolder>{
 
         private ArrayList<PostListStruct> mArray;
         private Context mContext;
@@ -173,6 +220,7 @@ public class SampleFragment extends Fragment {
         public ArrayAdapter(Context context, ArrayList<PostListStruct> array) {
             mContext = context;
             mArray = array;
+
         }
 
         @Override
@@ -187,12 +235,18 @@ public class SampleFragment extends Fragment {
             viewHolder.username.setText(mArray.get(i).username);
             viewHolder.time.setText(mArray.get(i).time);
             viewHolder.tag.setText(mArray.get(i).tag);
+            ImageLoader.getInstance().displayImage(mArray.get(i).imageSrc, viewHolder.image);
         }
 
         @Override
         public int getItemCount() {
             return mArray.size();
         }
+
+        public PostListStruct getItem(int position) {
+            return mArray.get(position);
+        }
+
 
         public void setmArray (ArrayList<PostListStruct> newArray) {
             mArray = newArray;
@@ -218,5 +272,5 @@ public class SampleFragment extends Fragment {
         }
     }
 
-
 }
+
