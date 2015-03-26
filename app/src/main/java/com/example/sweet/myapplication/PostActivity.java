@@ -87,11 +87,11 @@ public class PostActivity extends ActionBarActivity {
         });
         thread.start();
 
-        RevealTransition reveal = new RevealTransition(locationX, locationY);
-        reveal.addTarget(R.id.card_view);
-
-        getWindow().setEnterTransition(reveal);
-        getWindow().setReturnTransition(reveal);
+//        RevealTransition reveal = new RevealTransition(locationX, locationY);
+//        reveal.addTarget(R.id.card_view);
+//
+//        getWindow().setEnterTransition(reveal);
+//        getWindow().setReturnTransition(reveal);
 
     }
 

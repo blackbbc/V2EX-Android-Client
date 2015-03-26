@@ -5,3 +5,4 @@
 - [ ] Parse image in content
 - [ ] Get Reply
 - [ ] Transition
+- [ ] Click Effect
