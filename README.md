@@ -1,6 +1,7 @@
 ##V2EX
 
 ###To do list:
-- [ ] Refresh List
-- [ ] get Cache
-- [ ] Image Cache
+- [ ] Get Cache
+- [ ] Parse image in content
+- [ ] Get Reply
+- [ ] Transition
