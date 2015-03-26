@@ -3,6 +3,8 @@
 ###Developing... Only in Android 5.0
 
 ###To do list:
+- [ ] Design Detail Page UI
+- [ ] Get number of replies
 - [ ] store Cache
 - [ ] Parse image in content
 - [ ] Transition
