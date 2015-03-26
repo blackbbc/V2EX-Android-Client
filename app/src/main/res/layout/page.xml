@@ -21,19 +21,6 @@
 
         </com.example.sweet.myapplication.PullRefreshLayout>
 
-        <com.example.sweet.myapplication.FloatingActionButton
-            android:id="@+id/fabButton"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_gravity="bottom|right"
-            android:layout_margin="16dp"
-            android:textSize="24sp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="25dp" />
-
     </RelativeLayout>
 
 </FrameLayout>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="昨天在微博上看到了，打算注册呢\n结果需要扫码\n然后就算了。。。"
+        android:id="@+id/reply_content" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <ImageView
+            android:id="@+id/reply_avatar"
+            android:layout_width="48dp"
+            android:layout_height="48dp" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_weight="1" >
+
+            <TextView
+                android:id="@+id/reply_username"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:text="baozijun"
+                android:textColor="#005465"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/reply_time"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:text="44分钟前 0个回复"
+                android:textColor="#005465" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/reply_floor"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="1"
+            android:textColor="#005465"
+            android:textSize="@dimen/abc_text_size_medium_material" />
+    </LinearLayout>
+
+</LinearLayout>

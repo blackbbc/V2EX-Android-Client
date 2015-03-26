@@ -1,4 +1,4 @@
-package com.example.sweet.myapplication;
+package com.example.sweet.myapplication.widget;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -15,6 +15,8 @@ import android.util.TypedValue;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.example.sweet.myapplication.R;
 
 
 public class FloatingActionButton extends Button {

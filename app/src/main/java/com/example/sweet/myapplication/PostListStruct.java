@@ -13,6 +13,12 @@ public class PostListStruct {
 
     public PostListStruct() {}
 
+    public PostListStruct(String a, String b, String c) {
+        username = a;
+        time = b;
+        imageSrc = c;
+    }
+
     public PostListStruct(String a, String b, String c, String d, String e, String f) {
         title = a;
         username = b;

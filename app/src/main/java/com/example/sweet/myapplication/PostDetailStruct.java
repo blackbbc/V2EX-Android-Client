@@ -9,4 +9,5 @@ public class PostDetailStruct extends PostListStruct {
     public void setContent(String a) {
         content = a;
     }
+
 }
