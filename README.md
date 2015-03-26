@@ -1,8 +1,12 @@
-##V2EX
+##V2EX -- My own client
+
+###Developing... Only in Android 5.0
 
 ###To do list:
-- [ ] Get Cache
+- [ ] store Cache
 - [ ] Parse image in content
-- [ ] Get Reply
 - [ ] Transition
 - [ ] Click Effect
+
+![1](./images/1.png)
+![2](./images/2.png)
