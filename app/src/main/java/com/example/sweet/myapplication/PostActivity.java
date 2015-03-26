@@ -5,8 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -44,7 +47,6 @@ public class PostActivity extends ActionBarActivity {
     public ArrayList<ReplyDetailStruct> mDataSet;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +68,9 @@ public class PostActivity extends ActionBarActivity {
 
         mDataSet = new ArrayList<ReplyDetailStruct>();
         mRecyclerView = (RecyclerView)findViewById(R.id.post_recyclerview);
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mAdapter = new ArrayAdapter(this, mDataSet);
         mRecyclerView.setAdapter(mAdapter);
 
@@ -89,7 +93,6 @@ public class PostActivity extends ActionBarActivity {
                     String url = jsonData.src;
 
                     Document doc = Jsoup.connect(url).get();
-                    URL baseURL = new URL(url);
 
                     final String content = doc.select("div.topic_content").text();
 
@@ -112,6 +115,7 @@ public class PostActivity extends ActionBarActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Thread thread = new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -122,9 +126,14 @@ public class PostActivity extends ActionBarActivity {
                             URL baseURL = new URL(url);
                             Document doc = Jsoup.connect(url).timeout(4000).get();
 
-                            Elements box = doc.select("div#Main>div.box").eq(1);
-                            Elements cells = box.select(">div");
-                            cells.remove(0);
+                            Elements cells = doc.select("div.cell");
+
+                            int length = cells.size();
+                            for (int position=length-1; position>=0; position--) {
+                                if (!cells.get(position).hasAttr("id")) {
+                                    cells.remove(position);
+                                }
+                            }
 
                             for (Element cell : cells) {
                                 String replyContent = cell.select("div.reply_content").text();
@@ -164,7 +173,7 @@ public class PostActivity extends ActionBarActivity {
 
     }
 
-    private class ArrayAdapter extends RecyclerView.Adapter<ViewHolder>{
+    class ArrayAdapter extends RecyclerView.Adapter<ViewHolder>{
 
         private ArrayList<ReplyDetailStruct> mArray;
         private Context mContext;
@@ -205,7 +214,7 @@ public class PostActivity extends ActionBarActivity {
         }
     }
 
-    private class ViewHolder extends RecyclerView.ViewHolder{
+    static class ViewHolder extends RecyclerView.ViewHolder{
 
         public TextView content;
         public TextView username;
