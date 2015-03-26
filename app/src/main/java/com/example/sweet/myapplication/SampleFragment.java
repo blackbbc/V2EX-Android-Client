@@ -3,10 +3,14 @@ package com.example.sweet.myapplication;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,16 +21,19 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.logging.Handler;
 
 public class SampleFragment extends Fragment {
 
@@ -46,6 +53,7 @@ public class SampleFragment extends Fragment {
 
     private ArrayList<PostListStruct> getDataFromSqlite() {
         ArrayList<PostListStruct> lists = new ArrayList<PostListStruct>();
+
 
         return lists;
     }
@@ -91,7 +99,19 @@ public class SampleFragment extends Fragment {
                         long clickDuration = Calendar.getInstance().getTimeInMillis() - startClickTime;
                         if(childView != null && clickDuration < MAX_CLICK_DURATION && distance(pressedX, pressedY, e.getX(), e.getY()) < MAX_CLICK_DISTANCE) {
                             //click event has occurred
-                            onTouchEvent(rv, e);
+
+                            PostListStruct list = mAdapter.getItem(position);
+
+                            Intent intent = new Intent();
+                            intent.setClass(getActivity(), PostActivity.class);
+                            intent.putExtra("locationX", e.getRawX());
+                            intent.putExtra("locationY", e.getRawY());
+                            intent.putExtra("position", position);
+                            Gson gson = new Gson();
+                            String json = gson.toJson(mAdapter.getItem(position));
+                            intent.putExtra("json", json);
+                            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity());
+                            getActivity().startActivity(intent, options.toBundle());
                             return true;
                         }
                     }
@@ -113,18 +133,7 @@ public class SampleFragment extends Fragment {
 
             @Override
             public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-                PostListStruct list = mAdapter.getItem(position);
 
-                final Intent intent = new Intent();
-                intent.setClass(getActivity(), PostActivity.class);
-                intent.putExtra("locationX", e.getRawX());
-                intent.putExtra("locationY", e.getRawY());
-                intent.putExtra("position", position);
-                Gson gson = new Gson();
-                String json = gson.toJson(mAdapter.getItem(position));
-                intent.putExtra("json", json);
-                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity());
-                getActivity().startActivity(intent);
 
             }
         });
@@ -143,8 +152,7 @@ public class SampleFragment extends Fragment {
                             URL baseURL = new URL(url);
                             Document doc = Jsoup.connect(url).timeout(4000).get();
 
-                            Elements cellitems = doc.select("div.cell.item").eq(1);
-                            cellitems.remove();
+                            Elements cellitems = doc.select("div.cell.item");
 
                             for (Element cellitem : cellitems) {
                                 String temp = cellitem.select("span.small.fade").text();
@@ -174,6 +182,7 @@ public class SampleFragment extends Fragment {
                                 @Override
                                 public void run() {
                                     mAdapter.notifyDataSetChanged();
+                                    layout.setRefreshing(false);
                                 }
                             });
 
@@ -198,7 +207,7 @@ public class SampleFragment extends Fragment {
         return rootView;
     }
 
-    static class ArrayAdapter extends RecyclerView.Adapter<ViewHolder>{
+    class ArrayAdapter extends RecyclerView.Adapter<ViewHolder>{
 
         private ArrayList<PostListStruct> mArray;
         private Context mContext;
@@ -259,4 +268,3 @@ public class SampleFragment extends Fragment {
     }
 
 }
-
