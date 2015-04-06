@@ -4,12 +4,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
-    <integer-array name="google_colors">
-        <item>@color/refreshRed</item>
-        <item>@color/refreshBlue</item>
-        <item>@color/refreshYellow</item>
-        <item>@color/refreshGreen</item>
-    </integer-array>
     <string name="title_activity_post">PostActivity</string>
 
 </resources>

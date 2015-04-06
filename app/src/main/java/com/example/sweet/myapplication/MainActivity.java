@@ -12,6 +12,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,8 +24,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Button;
 
@@ -35,43 +38,54 @@ import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 
 public class MainActivity extends Activity {
-    public Button btn;
-    public ImageView img;
+    private SwipeRefreshLayout mSwipeLayout;
+    private ListView mListView;
+    private ArrayList<String> list = new ArrayList<String>();
 
-    TextView header;
-    CardView cardview;
+    private ProgressBar mProgressBar;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getWindow().setExitTransition(null);
-        getWindow().setReenterTransition(null);
+        mListView = (ListView) findViewById(R.id.listview);
+        mListView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, getData()));
 
-        header = (TextView)findViewById(R.id.header);
-
-        btn = (Button)findViewById(R.id.button);
-        cardview = (CardView)findViewById(R.id.card_view);
-
-
-        cardview.setOnClickListener(new View.OnClickListener() {
+        mSwipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
+        mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onClick(View v) {
-                Intent in1;
-                in1 = new Intent();
-                in1.setClass(MainActivity.this, PostActivity.class);
-                ActivityOptions option = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, header, "test1");
-                startActivity(in1, option.toBundle());
-
+            public void onRefresh() {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mSwipeLayout.setRefreshing(false);
+                }
+                }, 5000);
             }
         });
+        mSwipeLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
 
+        mProgressBar = (ProgressBar) findViewById(R.id.google_progress);
+
+    }
+
+    private ArrayList<String> getData() {
+        list.add("Hello");
+        list.add("This is stormzhang");
+        list.add("An Android Developer");
+        list.add("Love Open Source");
+        list.add("My GitHub: stormzhang");
+        list.add("weibo: googdev");
+        return list;
     }
 
 }

@@ -8,6 +8,8 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -77,70 +80,9 @@ public class SampleFragment extends Fragment {
         mAdapter = new ArrayAdapter(inflater.getContext(), mDataset);
         mRecyclerView.setAdapter(mAdapter);
 
-        mRecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
-            private static final int MAX_CLICK_DURATION = 200;
-            private static final int MAX_CLICK_DISTANCE = 15;
-            private long startClickTime;
-            private float pressedX, pressedY;
-
-            @Override
-            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-                View childView = rv.findChildViewUnder(e.getX(), e.getY());
-                int position = rv.getChildPosition(childView);
-
-                switch (e.getAction()) {
-                    case MotionEvent.ACTION_DOWN: {
-                        startClickTime = Calendar.getInstance().getTimeInMillis();
-                        pressedX = e.getX();
-                        pressedY = e.getY();
-                        break;
-                    }
-                    case MotionEvent.ACTION_UP: {
-                        long clickDuration = Calendar.getInstance().getTimeInMillis() - startClickTime;
-                        if(childView != null && clickDuration < MAX_CLICK_DURATION && distance(pressedX, pressedY, e.getX(), e.getY()) < MAX_CLICK_DISTANCE) {
-                            //click event has occurred
-
-                            PostListStruct list = mAdapter.getItem(position);
-
-                            Intent intent = new Intent();
-                            intent.setClass(getActivity(), PostActivity.class);
-                            intent.putExtra("locationX", e.getRawX());
-                            intent.putExtra("locationY", e.getRawY());
-                            intent.putExtra("position", position);
-                            Gson gson = new Gson();
-                            String json = gson.toJson(mAdapter.getItem(position));
-                            intent.putExtra("json", json);
-                            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity());
-                            getActivity().startActivity(intent, options.toBundle());
-                            return true;
-                        }
-                    }
-                }
-
-                return false;
-            }
-
-            private float distance(float x1, float y1, float x2, float y2) {
-                float dx = x1 - x2;
-                float dy = y1 - y2;
-                float distanceInPx = (float) Math.sqrt(dx * dx + dy * dy);
-                return pxToDp(distanceInPx);
-            }
-
-            private float pxToDp(float px) {
-                return px / getResources().getDisplayMetrics().density;
-            }
-
-            @Override
-            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-
-
-            }
-        });
-
-        final PullRefreshLayout layout;
-        layout = (PullRefreshLayout)rootView.findViewById(R.id.swipeRefreshLayout);
-        layout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
+        final SwipeRefreshLayout layout;
+        layout = (SwipeRefreshLayout)rootView.findViewById(R.id.swipeRefreshLayout);
+        layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 Thread thread = new Thread(new Runnable() {
@@ -155,7 +97,6 @@ public class SampleFragment extends Fragment {
                             Elements cellitems = doc.select("div.cell.item");
 
                             for (Element cellitem : cellitems) {
-                                String temp = cellitem.select("span.small.fade").text();
                                 String[] smallFade = cellitem.select("span.small.fade").text().split("•");
                                 String a = cellitem.select("span.item_title").text();
                                 String b = smallFade[1].replace(String.valueOf((char) 160), " ").trim();
@@ -225,12 +166,25 @@ public class SampleFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder viewHolder, int i) {
-            viewHolder.title.setText(mArray.get(i).title);
-            viewHolder.username.setText(mArray.get(i).username);
-            viewHolder.time.setText(mArray.get(i).time);
-            viewHolder.tag.setText(mArray.get(i).tag);
-            ImageLoader.getInstance().displayImage(mArray.get(i).imageSrc, viewHolder.image);
+        public void onBindViewHolder(ViewHolder viewHolder, final int position) {
+            viewHolder.title.setText(mArray.get(position).title);
+            viewHolder.username.setText(mArray.get(position).username);
+            viewHolder.time.setText(mArray.get(position).time);
+            viewHolder.tag.setText(mArray.get(position).tag);
+            ImageLoader.getInstance().displayImage(mArray.get(position).imageSrc, viewHolder.image);
+            viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PostListStruct list = getItem(position);
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity(), PostActivity.class);
+                    Gson gson = new Gson();
+                    String json = gson.toJson(getItem(position));
+                    intent.putExtra("json", json);
+                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity());
+                    getActivity().startActivity(intent, options.toBundle());
+                }
+            });
         }
 
         @Override
@@ -241,7 +195,6 @@ public class SampleFragment extends Fragment {
         public PostListStruct getItem(int position) {
             return mArray.get(position);
         }
-
 
         public void setmArray (ArrayList<PostListStruct> newArray) {
             mArray = newArray;
@@ -255,10 +208,12 @@ public class SampleFragment extends Fragment {
         public TextView time;
         public TextView tag;
         public ImageView image;
+        public CardView cardView;
 
 
         public ViewHolder(View itemView) {
             super(itemView);
+            cardView = (CardView)itemView.findViewById(R.id.card_view);
             title = (TextView)itemView.findViewById(R.id.header);
             username = (TextView)itemView.findViewById(R.id.username);
             time = (TextView)itemView.findViewById(R.id.time);
