@@ -24,7 +24,6 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         Fresco.initialize(this);
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
@@ -53,6 +52,7 @@ public class MainActivity extends ActionBarActivity {
                         .create());
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(10);
 
         SmartTabLayout viewPagerTab = (SmartTabLayout)findViewById(R.id.viewpagertab);
         viewPagerTab.setViewPager(viewPager);

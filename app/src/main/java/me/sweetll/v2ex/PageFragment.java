@@ -54,6 +54,7 @@ public class PageFragment extends Fragment {
             "https://v2ex.com/?tab=r2"
     };
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment, container, false);
@@ -62,6 +63,8 @@ public class PageFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
         ButterKnife.inject(this, view);
         final int position = FragmentPagerItem.getPosition(getArguments());
 
