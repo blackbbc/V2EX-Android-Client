@@ -3,6 +3,7 @@ package me.sweetll.v2ex;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,9 +14,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
 
 import org.jsoup.Jsoup;
@@ -157,6 +158,7 @@ public class PageFragment extends Fragment {
             viewHolder.userName.setText(mArray.get(position).userName);
             viewHolder.time.setText(mArray.get(position).time);
             viewHolder.tag.setText(mArray.get(position).tag);
+            viewHolder.avatar.setImageURI(Uri.parse(mArray.get(position).imageSrc));
 //            ImageLoader.getInstance().displayImage(mArray.get(position).imageSrc, viewHolder.image);
 //            viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
 //                @Override
@@ -190,7 +192,7 @@ public class PageFragment extends Fragment {
     static class ViewHolder extends RecyclerView.ViewHolder{
 
         @InjectView(R.id.title) TextView title;
-        @InjectView(R.id.avatar) ImageView avatar;
+        @InjectView(R.id.avatar) SimpleDraweeView avatar;
         @InjectView(R.id.userName) TextView userName;
         @InjectView(R.id.time) TextView time;
         @InjectView(R.id.tag) TextView tag;
