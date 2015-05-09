@@ -24,6 +24,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -36,9 +37,18 @@ public class MainActivity extends ActionBarActivity {
         FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
                 getSupportFragmentManager(),
                 FragmentPagerItems.with(this)
-                    .add(R.string.titleA, PageFragment.class)
-                    .add(R.string.titleB, PageFragment.class)
-                    .create());
+                        .add("城市", PageFragment.class)
+                        .add("创意", PageFragment.class)
+                        .add("好玩", PageFragment.class)
+                        .add("Apple", PageFragment.class)
+                        .add("酷工作", PageFragment.class)
+                        .add("交易", PageFragment.class)
+                        .add("城市", PageFragment.class)
+                        .add("问与答", PageFragment.class)
+                        .add("最热", PageFragment.class)
+                        .add("全部", PageFragment.class)
+                        .add("R2", PageFragment.class)
+                        .create());
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setAdapter(adapter);
 
