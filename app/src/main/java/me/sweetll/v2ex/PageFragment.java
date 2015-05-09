@@ -92,11 +92,12 @@ public class PageFragment extends Fragment {
                                 String[] smallFade = cellitem.select("span.small.fade").text().split("•");
                                 String title = cellitem.select("span.item_title").text();
                                 String userName = smallFade[1].replace(String.valueOf((char) 160), " ").trim();
-
-                                //FUCK!
                                 int spacePosition = userName.indexOf(" ");
                                 String time = userName.substring(spacePosition);
                                 userName = userName.substring(0, spacePosition);
+
+                                String reply = cellitem.select("tr>td").eq(3).text();
+                                reply = reply != "" ? reply : "0";
 
                                 String tag = smallFade[0].replace(String.valueOf((char) 160), " ").trim();
                                 String imageSrc = cellitem.select("img.avatar").attr("src");
@@ -105,7 +106,7 @@ public class PageFragment extends Fragment {
                                 URL temp2 = new URL(baseURL, src);
                                 imageSrc = temp1.toString();
                                 src = temp2.toString();
-                                Post list = new Post(title, userName, time, tag, "0", imageSrc, src);
+                                Post list = new Post(title, userName, time, tag, reply, imageSrc, src);
                                 lists.add(list);
                             }
 
@@ -161,6 +162,7 @@ public class PageFragment extends Fragment {
             viewHolder.userName.setText(mArray.get(position).userName);
             viewHolder.time.setText(mArray.get(position).time);
             viewHolder.tag.setText(mArray.get(position).tag);
+            viewHolder.reply.setText(mArray.get(position).reply);
             viewHolder.avatar.setImageURI(Uri.parse(mArray.get(position).imageSrc));
 //            ImageLoader.getInstance().displayImage(mArray.get(position).imageSrc, viewHolder.image);
 //            viewHolder.cardView.setOnClickListener(new View.OnClickListener() {

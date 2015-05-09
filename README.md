@@ -4,7 +4,7 @@
 
 ###To do list:
 - [X] Why fragment destroyed when tab switched?
-- [ ] Get number of replies
+- [X] Get number of replies
 - [ ] Parse image in content
 - [ ] Transition
 - [X] Click Effect
