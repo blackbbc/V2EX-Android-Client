@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="AppTheme" parent="Apptheme.Base">
-        <item name="android:navigationBarColor">#11FFFFFF</item>
+        <item name="android:navigationBarColor">#44000000</item>
         <item name="android:statusBarColor">@color/primary_dark</item>
+        <item name="android:colorControlHighlight">@color/primary</item>
     </style>
 </resources>

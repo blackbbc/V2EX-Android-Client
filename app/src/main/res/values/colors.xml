@@ -11,4 +11,7 @@
     <color name="secondary_text">#727272</color>
     <color name="divider">#B6B6B6</color>
     <color name="accent">#FF4081</color>
+
+    <color name="background_light">#fffafafa</color>
+    <color name="background_little_light">#ffe5e5e5</color>
 </resources>
