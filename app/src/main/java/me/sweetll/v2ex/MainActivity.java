@@ -2,12 +2,17 @@ package me.sweetll.v2ex;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.ogaclejapan.smarttablayout.SmartTabLayout;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
+import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -26,10 +31,21 @@ public class MainActivity extends ActionBarActivity {
         mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer);
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
         mDrawerToggle.syncState();
-
         mDrawerLayout.setDrawerListener(mDrawerToggle);
-    }
 
+        FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
+                getSupportFragmentManager(),
+                FragmentPagerItems.with(this)
+                    .add(R.string.titleA, PageFragment.class)
+                    .add(R.string.titleB, PageFragment.class)
+                    .create());
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager.setAdapter(adapter);
+
+        SmartTabLayout viewPagerTab = (SmartTabLayout)findViewById(R.id.viewpagertab);
+        viewPagerTab.setViewPager(viewPager);
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

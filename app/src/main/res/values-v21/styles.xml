@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="AppTheme" parent="Apptheme.Base">
-        <item name="android:navigationBarColor">@color/accent_material_light</item>
-        <item name="android:statusBarColor">#88009688</item>
+        <item name="android:navigationBarColor">#11FFFFFF</item>
+        <item name="android:statusBarColor">@color/primary_dark</item>
     </style>
 </resources>

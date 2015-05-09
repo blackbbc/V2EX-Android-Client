@@ -22,4 +22,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile "com.android.support:appcompat-v7:21.0.+"
+    compile 'com.ogaclejapan.smarttablayout:library:1.1.3@aar'
+    compile 'com.ogaclejapan.smarttablayout:utils-v4:1.1.3@aar'
 }
