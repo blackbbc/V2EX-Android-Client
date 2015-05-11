@@ -2,9 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer"
+    android:layout_marginTop="40px"
     android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    android:fitsSystemWindows="true">
+    android:layout_width="match_parent" >
 
     <!--Content-->
     <RelativeLayout
@@ -38,8 +38,7 @@
             app:stl_underlineThickness="1dp"
             app:stl_dividerColor="@color/divider"
             app:stl_defaultTabTextColor="@color/text"
-            app:stl_customTabTextLayoutId="@layout/custom_tab"
-            />
+            app:stl_customTabTextLayoutId="@layout/custom_tab" />
 
         </LinearLayout>
 
