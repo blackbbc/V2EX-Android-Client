@@ -2,6 +2,7 @@
 <resources>
     <style name="AppTheme" parent="Apptheme.Base">
         <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@color/primary_dark</item>
         <item name="android:colorControlHighlight">@color/primary</item>
     </style>
