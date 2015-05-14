@@ -16,13 +16,13 @@
         android:text="说一说最能提高你 Coding 效率的音乐，回头我在网易晕音乐开个歌单好了，喵～"
         android:id="@+id/detail_title" />
 
-    <com.marshalchen.ultimaterecyclerview.UltimateRecyclerView
+    <com.marshalchen.ultimaterecyclerview.CustomUltimateRecyclerview
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:id="@+id/ultimate_recycler_view"
         android:layout_below="@id/detail_title"
         app:recyclerviewClipToPadding="true"
         app:recyclerviewPadding="2dp">
-    </com.marshalchen.ultimaterecyclerview.UltimateRecyclerView>
+    </com.marshalchen.ultimaterecyclerview.CustomUltimateRecyclerview>
 
 </RelativeLayout>

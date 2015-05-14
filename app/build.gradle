@@ -31,6 +31,7 @@ dependencies {
     compile 'com.marshalchen.ultimaterecyclerview:library:0.3.2'
     compile 'com.yqritc:recyclerview-flexibledivider:1.2.4'
     compile 'com.baoyz.pullrefreshlayout:library:1.0.1'
+    compile 'com.github.castorflex.smoothprogressbar:library:1.1.0'
     compile files('/home/sweet/AndroidStudioProjects/V2EX/libs/gson-2.3.1.jar')
     compile files('/home/sweet/AndroidStudioProjects/V2EX/libs/jsoup-1.8.1.jar')
 }

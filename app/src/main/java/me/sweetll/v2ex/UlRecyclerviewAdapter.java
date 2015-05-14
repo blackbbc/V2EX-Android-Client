@@ -26,39 +26,41 @@ public class UlRecyclerviewAdapter extends UltimateViewAdapter {
     private List<Detail> mArray;
 
     public UlRecyclerviewAdapter(Context context, List<Detail> array) {
-        mContext = context;
+        this.mContext = context;
         mArray = array;
-    }
-
-    public void setData(List<Detail> data) {
-        mArray = data;
-    }
-
-    @Override
-    public UltimateRecyclerviewViewHolder onCreateViewHolder(ViewGroup viewGroup) {
-        View v = LayoutInflater.from(mContext).inflate(R.layout.ultimate_recycler_view_adapter, viewGroup, false);
-        return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int position) {
-        ((ViewHolder)viewHolder).userName.setText(mArray.get(position).userName);
-        ((ViewHolder)viewHolder).time.setText(mArray.get(position).time);
-        ((ViewHolder)viewHolder).floor.setText(mArray.get(position).floor);
-        ((ViewHolder)viewHolder).content.setText(mArray.get(position).content);
-        ((ViewHolder)viewHolder).avatar.setImageURI(Uri.parse(mArray.get(position).imageSrc));
-    }
-
-    @Override
-    public int getItemCount() {
-        return mArray.size();
+        if (position < getItemCount() && (customHeaderView != null ? position <= mArray.size() : position < mArray.size()) && (customHeaderView != null ? position > 0 : true)) {
+            ((ViewHolder) viewHolder).userName.setText(mArray.get(customHeaderView != null ? position - 1 : position).userName);
+            ((ViewHolder) viewHolder).time.setText(mArray.get(customHeaderView != null ? position - 1 : position).time);
+            ((ViewHolder) viewHolder).floor.setText(mArray.get(customHeaderView != null ? position - 1 : position).floor);
+            ((ViewHolder) viewHolder).content.setText(mArray.get(customHeaderView != null ? position - 1 : position).content);
+            ((ViewHolder) viewHolder).avatar.setImageURI(Uri.parse(mArray.get(customHeaderView != null ? position - 1 : position).imageSrc));
+        }
     }
 
     @Override
     public int getAdapterItemCount() {return mArray.size(); }
 
-    public Detail getItem(int position) {
-        return mArray.get(position);
+    public void setData(List<Detail> data) {
+        mArray = data;
+    }
+
+    public void addDataAll(List<Detail> data) {
+        mArray.addAll(data);
+    }
+
+    public void addData(Detail data) {
+        mArray.add(data);
+    }
+
+    @Override
+    public UltimateRecyclerviewViewHolder onCreateViewHolder(ViewGroup viewGroup) {
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.ultimate_recycler_view_adapter, viewGroup, false);
+        ViewHolder vh = new ViewHolder(v);
+        return vh;
     }
 
     class ViewHolder extends UltimateRecyclerviewViewHolder {
@@ -73,5 +75,7 @@ public class UlRecyclerviewAdapter extends UltimateViewAdapter {
             ButterKnife.inject(this, view);
         }
     }
+
+
 
 }

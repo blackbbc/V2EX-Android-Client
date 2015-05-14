@@ -3,12 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:textSize="18sp"
+    <fr.castorflex.android.smoothprogressbar.SmoothProgressBar
+        android:id="@+id/google_now"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/primary_text"
-        android:text="Hello World"
-        android:id="@+id/testview" />
+        style="@style/GNowProgressBar"
+        android:indeterminate="true"/>
 
 </RelativeLayout>
