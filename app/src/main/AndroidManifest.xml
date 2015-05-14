@@ -13,13 +13,18 @@
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|screenSize|uiMode"
+            android:label="@string/app_name"
             android:launchMode="singleTop"
-            android:screenOrientation="behind"
-            android:label="@string/app_name" >
+            android:screenOrientation="behind" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".DetailPageActivity"
+            android:label="@string/title_activity_detail_page" >
         </activity>
     </application>
 

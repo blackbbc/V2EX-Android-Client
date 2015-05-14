@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.google.gson.Gson;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
 
 import org.jsoup.Jsoup;
@@ -164,20 +165,20 @@ public class PageFragment extends Fragment {
             viewHolder.tag.setText(mArray.get(position).tag);
             viewHolder.reply.setText(mArray.get(position).reply);
             viewHolder.avatar.setImageURI(Uri.parse(mArray.get(position).imageSrc));
-//            ImageLoader.getInstance().displayImage(mArray.get(position).imageSrc, viewHolder.image);
-//            viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    PostListStruct list = getItem(position);
-//                    Intent intent = new Intent();
-//                    intent.setClass(getActivity(), PostActivity.class);
-//                    Gson gson = new Gson();
-//                    String json = gson.toJson(getItem(position));
-//                    intent.putExtra("json", json);
+            viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Post list = getItem(position);
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity(), DetailPageActivity.class);
+                    Gson gson = new Gson();
+                    String json = gson.toJson(getItem(position));
+                    intent.putExtra("json", json);
 //                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity());
 //                    getActivity().startActivity(intent, options.toBundle());
-//                }
-//            });
+                    getActivity().startActivity(intent);
+                }
+            });
         }
 
         @Override

@@ -37,7 +37,7 @@ public class MainActivity extends ActionBarActivity {
         FragmentPagerItemAdapter adapter = new FragmentPagerItemAdapter(
                 getSupportFragmentManager(),
                 FragmentPagerItems.with(this)
-                        .add("城市", PageFragment.class)
+                        .add("技术", PageFragment.class)
                         .add("创意", PageFragment.class)
                         .add("好玩", PageFragment.class)
                         .add("Apple", PageFragment.class)
