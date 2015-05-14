@@ -83,9 +83,9 @@
                         android:textColor="@color/primary_text"
                         android:textSize="@dimen/abc_text_size_medium_material"
                         android:background="@drawable/card_rect"
-                        android:layout_gravity="center_horizontal"
                         android:paddingLeft="3dp"
-                        android:paddingRight="3dp" />
+                        android:paddingRight="3dp"
+                        android:layout_gravity="right" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

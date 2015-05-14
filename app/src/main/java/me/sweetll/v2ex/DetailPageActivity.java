@@ -4,13 +4,13 @@ import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
+import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -54,6 +54,12 @@ public class DetailPageActivity extends ActionBarActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(ulRecyclerviewAdapter);
 
+        recyclerView.addItemDecoration(new HorizontalDividerItemDecoration.Builder(this)
+                .sizeResId(R.dimen.divider)
+                .colorResId(R.color.divider_dark)
+                .marginResId(R.dimen.lefrmargin, R.dimen.rightmargin)
+                .build());
+
         Intent intent = getIntent();
         String json = intent.getStringExtra("json");
         Gson gson = new Gson();
@@ -70,6 +76,12 @@ public class DetailPageActivity extends ActionBarActivity {
                     URL baseURL = new URL(url);
                     Document doc = Jsoup.connect(url).get();
 
+                    //Fetch the 0-th floor content
+                    String topic_content = doc.select("div.topic_content").text();
+                    Detail topic = new Detail(jsonData.userName, jsonData.time, topic_content, "楼主", jsonData.imageSrc);
+                    lists.add(topic);
+
+                    //Fetch the 1st page replies
                     Elements cells = doc.select("div.cell");
 
                     int length = cells.size();
