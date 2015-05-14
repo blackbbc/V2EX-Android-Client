@@ -10,6 +10,6 @@
 - [X] Click Effect
 - [ ] login
 - [ ] collect
-- [ ] auto turn next page
+- [X] auto turn next page
 
 ![1](./images/demo.gif)
