@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.baoyz.widget.PullRefreshLayout;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
@@ -38,7 +39,7 @@ import me.sweetll.v2ex.DataStructure.Post;
  */
 public class PageFragment extends Fragment {
     @InjectView(R.id.recyclerView) RecyclerView mRecyclerView;
-    @InjectView(R.id.swipeRefreshLayout) SwipeRefreshLayout layout;
+    @InjectView(R.id.swipeRefreshLayout) PullRefreshLayout layout;
     private ArrayAdapter mAdapter;
     private ArrayList<Post> mDataset;
     private String[] urls = {
@@ -74,7 +75,9 @@ public class PageFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mAdapter);
 
-        layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+        layout.setRefreshStyle(PullRefreshLayout.STYLE_WATER_DROP);
+        layout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 Thread thread = new Thread(new Runnable() {
