@@ -49,8 +49,8 @@
 
             </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
+            <org.sufficientlysecure.htmltextview.HtmlTextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/abc_text_size_body_1_material"
                 android:textColor="@color/primary_text"

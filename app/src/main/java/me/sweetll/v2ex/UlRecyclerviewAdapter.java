@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
 
+import org.sufficientlysecure.htmltextview.HtmlTextView;
+
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -36,7 +38,7 @@ public class UlRecyclerviewAdapter extends UltimateViewAdapter {
             ((ViewHolder) viewHolder).userName.setText(mArray.get(customHeaderView != null ? position - 1 : position).userName);
             ((ViewHolder) viewHolder).time.setText(mArray.get(customHeaderView != null ? position - 1 : position).time);
             ((ViewHolder) viewHolder).floor.setText(mArray.get(customHeaderView != null ? position - 1 : position).floor);
-            ((ViewHolder) viewHolder).content.setText(mArray.get(customHeaderView != null ? position - 1 : position).content);
+            ((ViewHolder) viewHolder).content.setHtmlFromString(mArray.get(customHeaderView != null ? position - 1 : position).content, false);
             ((ViewHolder) viewHolder).avatar.setImageURI(Uri.parse(mArray.get(customHeaderView != null ? position - 1 : position).imageSrc));
         }
     }
@@ -67,7 +69,7 @@ public class UlRecyclerviewAdapter extends UltimateViewAdapter {
         @InjectView(R.id.detail_userName) TextView userName;
         @InjectView(R.id.detail_time) TextView time;
         @InjectView(R.id.detail_floor) TextView floor;
-        @InjectView(R.id.detail_content) TextView content;
+        @InjectView(R.id.detail_content) HtmlTextView content;
         @InjectView(R.id.detail_avatar) SimpleDraweeView avatar;
 
         public ViewHolder(View view) {

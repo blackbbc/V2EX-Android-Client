@@ -95,7 +95,7 @@ public class DetailPageActivity extends ActionBarActivity {
                     Document doc = Jsoup.connect(url+"?p="+nextPage).get();
 
                     //Fetch the 0-th floor content
-                    String topic_content = doc.select("div.topic_content").text();
+                    String topic_content = doc.select("div.topic_content").html();
                     Detail topic = new Detail(jsonData.userName, jsonData.time, topic_content, "楼主", jsonData.imageSrc);
                     lists.add(topic);
 
@@ -110,7 +110,7 @@ public class DetailPageActivity extends ActionBarActivity {
                     }
 
                     for (Element cell:cells) {
-                        String content = cell.select("div.reply_content").text();
+                        String content = cell.select("div.reply_content").html();
                         String userName = cell.select("a.dark").text();
                         String time = cell.select("span.fade.small").text();
                         String floor = cell.select("span.no").text();
@@ -172,7 +172,7 @@ public class DetailPageActivity extends ActionBarActivity {
                                     continue;
                                 }
 
-                                String content = cell.select("div.reply_content").text();
+                                String content = cell.select("div.reply_content").html();
                                 String userName = cell.select("a.dark").text();
                                 String time = cell.select("span.fade.small").text();
                                 String imageSrc = cell.select("img.avatar").attr("src");
