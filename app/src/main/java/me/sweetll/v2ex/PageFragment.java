@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.baoyz.widget.PullRefreshLayout;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.gson.Gson;
+import com.marshalchen.ultimaterecyclerview.animators.FadeInAnimator;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
 
 import org.jsoup.Jsoup;
@@ -33,6 +34,8 @@ import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import jp.wasabeef.recyclerview.animators.adapters.AlphaInAnimationAdapter;
+import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 import me.sweetll.v2ex.DataStructure.Post;
 
 /**
@@ -74,7 +77,9 @@ public class PageFragment extends Fragment {
         mDataset = new ArrayList<Post>();
         mAdapter = new ArrayAdapter(getActivity(), mDataset);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerView.setAdapter(mAdapter);
+
+        AlphaInAnimationAdapter alphaInAnimationAdapter = new AlphaInAnimationAdapter(mAdapter);
+        mRecyclerView.setAdapter(new ScaleInAnimationAdapter(alphaInAnimationAdapter));
 
 
         layout.setRefreshStyle(PullRefreshLayout.STYLE_WATER_DROP);

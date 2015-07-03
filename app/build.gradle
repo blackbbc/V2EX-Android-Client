@@ -21,9 +21,9 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:21.0.+'
+    compile 'com.android.support:appcompat-v7:22.0.0'
+    compile 'com.android.support:recyclerview-v7:22.0.0'
     compile 'com.android.support:cardview-v7:21.0.+'
-    compile 'com.android.support:recyclerview-v7:21.0.+'
     compile 'com.ogaclejapan.smarttablayout:library:1.1.3@aar'
     compile 'com.ogaclejapan.smarttablayout:utils-v4:1.1.3@aar'
     compile 'com.jakewharton:butterknife:6.1.0'
@@ -33,6 +33,7 @@ dependencies {
     compile 'com.yqritc:recyclerview-flexibledivider:1.2.4'
     compile 'com.baoyz.pullrefreshlayout:library:1.0.1'
     compile 'com.github.castorflex.smoothprogressbar:library:1.1.0'
+    compile 'jp.wasabeef:recyclerview-animators:1.2.0@aar'
     compile files('/home/sweet/AndroidStudioProjects/V2EX/libs/gson-2.3.1.jar')
     compile files('/home/sweet/AndroidStudioProjects/V2EX/libs/jsoup-1.8.1.jar')
 }
