@@ -12,14 +12,14 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.marshalchen.ultimaterecyclerview.UltimateViewAdapter;
-
-import org.sufficientlysecure.htmltextview.HtmlTextView;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import me.sweetll.v2ex.DataStructure.Detail;
+import me.sweetll.v2ex.Utils.PicassoImageGetter;
 import me.sweetll.v2ex.Utils.URLImageParser;
 
 /**
@@ -43,7 +43,8 @@ public class UlRecyclerviewAdapter extends UltimateViewAdapter {
             ((ViewHolder) viewHolder).floor.setText(mArray.get(customHeaderView != null ? position - 1 : position).floor);
 //            ((ViewHolder) viewHolder).content.setHtmlFromString(mArray.get(customHeaderView != null ? position - 1 : position).content, false);
             TextView textView= ((ViewHolder) viewHolder).content;
-            URLImageParser p = new URLImageParser(textView, mContext);
+//            URLImageParser p = new URLImageParser(textView, mContext);
+            PicassoImageGetter p = new PicassoImageGetter(textView, mContext.getResources(), Picasso.with(mContext));
             Spanned htmlSpan = Html.fromHtml(mArray.get(customHeaderView != null ? position - 1 : position).content, p, null);
             ((ViewHolder) viewHolder).content.setText(htmlSpan);
             ((ViewHolder) viewHolder).avatar.setImageURI(Uri.parse(mArray.get(customHeaderView != null ? position - 1 : position).imageSrc));
