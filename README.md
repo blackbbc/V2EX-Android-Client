@@ -6,7 +6,7 @@
 - [X] Why fragment destroyed when tab switched?
 - [X] Get number of replies
 - [X] Parse image in content
-- [ ] Transition
+- [X] Transition
 - [X] Click Effect
 - [ ] login
 - [ ] collect
