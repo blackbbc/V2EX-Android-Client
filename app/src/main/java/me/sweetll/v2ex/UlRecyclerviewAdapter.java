@@ -3,6 +3,8 @@ package me.sweetll.v2ex;
 import android.content.Context;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,7 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import me.sweetll.v2ex.DataStructure.Detail;
+import me.sweetll.v2ex.Utils.URLImageParser;
 
 /**
  * Created by sweet on 15-5-13.
@@ -38,7 +41,11 @@ public class UlRecyclerviewAdapter extends UltimateViewAdapter {
             ((ViewHolder) viewHolder).userName.setText(mArray.get(customHeaderView != null ? position - 1 : position).userName);
             ((ViewHolder) viewHolder).time.setText(mArray.get(customHeaderView != null ? position - 1 : position).time);
             ((ViewHolder) viewHolder).floor.setText(mArray.get(customHeaderView != null ? position - 1 : position).floor);
-            ((ViewHolder) viewHolder).content.setHtmlFromString(mArray.get(customHeaderView != null ? position - 1 : position).content, false);
+//            ((ViewHolder) viewHolder).content.setHtmlFromString(mArray.get(customHeaderView != null ? position - 1 : position).content, false);
+            TextView textView= ((ViewHolder) viewHolder).content;
+            URLImageParser p = new URLImageParser(textView, mContext);
+            Spanned htmlSpan = Html.fromHtml(mArray.get(customHeaderView != null ? position - 1 : position).content, p, null);
+            ((ViewHolder) viewHolder).content.setText(htmlSpan);
             ((ViewHolder) viewHolder).avatar.setImageURI(Uri.parse(mArray.get(customHeaderView != null ? position - 1 : position).imageSrc));
         }
     }
@@ -69,7 +76,7 @@ public class UlRecyclerviewAdapter extends UltimateViewAdapter {
         @InjectView(R.id.detail_userName) TextView userName;
         @InjectView(R.id.detail_time) TextView time;
         @InjectView(R.id.detail_floor) TextView floor;
-        @InjectView(R.id.detail_content) HtmlTextView content;
+        @InjectView(R.id.detail_content) TextView content;
         @InjectView(R.id.detail_avatar) SimpleDraweeView avatar;
 
         public ViewHolder(View view) {
