@@ -5,10 +5,14 @@ import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.transition.Fade;
+import android.transition.Transition;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -33,6 +37,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import me.sweetll.v2ex.DataStructure.Detail;
 import me.sweetll.v2ex.DataStructure.Post;
+import me.sweetll.v2ex.Utils.Navigator;
 
 
 public class DetailPageActivity extends ActionBarActivity {
@@ -52,6 +57,8 @@ public class DetailPageActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_page);
         ButterKnife.inject(this);
+
+        initTransition();
 
         recyclerView.setHasFixedSize(false);
 
@@ -238,5 +245,17 @@ public class DetailPageActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void initTransition() {
+        Transition transition = new Fade();
+        transition.setDuration(Navigator.ANIM_DURATION);
+
+        getWindow().setEnterTransition(transition);
+        getWindow().setExitTransition(transition);
+
+
+        getWindow().getSharedElementEnterTransition().setDuration(Navigator.ANIM_DURATION);
+
     }
 }

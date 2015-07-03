@@ -37,6 +37,7 @@ import butterknife.InjectView;
 import jp.wasabeef.recyclerview.animators.adapters.AlphaInAnimationAdapter;
 import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 import me.sweetll.v2ex.DataStructure.Post;
+import me.sweetll.v2ex.Utils.Navigator;
 
 /**
  * Created by sweet on 15-5-8.
@@ -80,7 +81,8 @@ public class PageFragment extends Fragment {
 
         AlphaInAnimationAdapter alphaInAnimationAdapter = new AlphaInAnimationAdapter(mAdapter);
         mRecyclerView.setAdapter(new ScaleInAnimationAdapter(alphaInAnimationAdapter));
-
+        mRecyclerView.setItemAnimator(new jp.wasabeef.recyclerview.animators.FadeInAnimator());
+        mRecyclerView.getItemAnimator().setAddDuration(Navigator.ANIM_DURATION);
 
         layout.setRefreshStyle(PullRefreshLayout.STYLE_WATER_DROP);
         layout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
@@ -167,7 +169,7 @@ public class PageFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder viewHolder, final int position) {
+        public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
             viewHolder.title.setText(mArray.get(position).title);
             viewHolder.userName.setText(mArray.get(position).userName);
             viewHolder.time.setText(mArray.get(position).time);
@@ -178,14 +180,9 @@ public class PageFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     Post list = getItem(position);
-                    Intent intent = new Intent();
-                    intent.setClass(getActivity(), DetailPageActivity.class);
                     Gson gson = new Gson();
-                    String json = gson.toJson(getItem(position));
-                    intent.putExtra("json", json);
-//                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity());
-//                    getActivity().startActivity(intent, options.toBundle());
-                    getActivity().startActivity(intent);
+                    String json = gson.toJson(list);
+                    Navigator.launchDetail(getActivity(), viewHolder.cardView, json, getActivity().findViewById(R.id.base_fragment_background));
                 }
             });
         }

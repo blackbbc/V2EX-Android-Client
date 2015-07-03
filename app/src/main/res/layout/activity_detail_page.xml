@@ -4,6 +4,7 @@
     android:layout_marginTop="40px"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:transitionName="detail_element"
     tools:context="me.sweetll.v2ex.DetailPageActivity">
 
     <TextView
