@@ -32,8 +32,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import jp.wasabeef.recyclerview.animators.adapters.AlphaInAnimationAdapter;
 import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 import me.sweetll.v2ex.DataStructure.Post;
@@ -43,8 +43,8 @@ import me.sweetll.v2ex.Utils.Navigator;
  * Created by sweet on 15-5-8.
  */
 public class PageFragment extends Fragment {
-    @InjectView(R.id.recyclerView) RecyclerView mRecyclerView;
-    @InjectView(R.id.swipeRefreshLayout) PullRefreshLayout layout;
+    @Bind(R.id.recyclerView) RecyclerView mRecyclerView;
+    @Bind(R.id.swipeRefreshLayout) PullRefreshLayout layout;
     private ArrayAdapter mAdapter;
     private ArrayList<Post> mDataset;
     private String[] urls = {
@@ -72,7 +72,7 @@ public class PageFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
         final int position = FragmentPagerItem.getPosition(getArguments());
 
         mDataset = new ArrayList<Post>();
@@ -203,17 +203,17 @@ public class PageFragment extends Fragment {
 
     static class ViewHolder extends RecyclerView.ViewHolder{
 
-        @InjectView(R.id.title) TextView title;
-        @InjectView(R.id.avatar) SimpleDraweeView avatar;
-        @InjectView(R.id.userName) TextView userName;
-        @InjectView(R.id.time) TextView time;
-        @InjectView(R.id.tag) TextView tag;
-        @InjectView(R.id.reply) TextView reply;
-        @InjectView(R.id.card_view) CardView cardView;
+        @Bind(R.id.title) TextView title;
+        @Bind(R.id.avatar) SimpleDraweeView avatar;
+        @Bind(R.id.userName) TextView userName;
+        @Bind(R.id.time) TextView time;
+        @Bind(R.id.tag) TextView tag;
+        @Bind(R.id.reply) TextView reply;
+        @Bind(R.id.card_view) CardView cardView;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.inject(this, itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 

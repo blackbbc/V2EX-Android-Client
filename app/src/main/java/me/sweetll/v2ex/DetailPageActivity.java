@@ -33,16 +33,16 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import me.sweetll.v2ex.DataStructure.Detail;
 import me.sweetll.v2ex.DataStructure.Post;
 import me.sweetll.v2ex.Utils.Navigator;
 
 
 public class DetailPageActivity extends ActionBarActivity {
-    @InjectView(R.id.ultimate_recycler_view) CustomUltimateRecyclerview recyclerView;
-    @InjectView(R.id.detail_title) TextView title;
+    @Bind(R.id.ultimate_recycler_view) CustomUltimateRecyclerview recyclerView;
+    @Bind(R.id.detail_title) TextView title;
 
     UlRecyclerviewAdapter ulRecyclerviewAdapter;
     LinearLayoutManager linearLayoutManager;
@@ -56,7 +56,7 @@ public class DetailPageActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_page);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         initTransition();
 

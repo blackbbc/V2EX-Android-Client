@@ -1,5 +1,4 @@
 <resources>
-
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Apptheme.Base"></style>
     <style name="Apptheme.Base" parent="Theme.AppCompat.NoActionBar">

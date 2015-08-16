@@ -16,8 +16,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import me.sweetll.v2ex.DataStructure.Detail;
 import me.sweetll.v2ex.Utils.PicassoImageGetter;
 import me.sweetll.v2ex.Utils.URLImageParser;
@@ -74,15 +74,15 @@ public class UlRecyclerviewAdapter extends UltimateViewAdapter {
     }
 
     class ViewHolder extends UltimateRecyclerviewViewHolder {
-        @InjectView(R.id.detail_userName) TextView userName;
-        @InjectView(R.id.detail_time) TextView time;
-        @InjectView(R.id.detail_floor) TextView floor;
-        @InjectView(R.id.detail_content) TextView content;
-        @InjectView(R.id.detail_avatar) SimpleDraweeView avatar;
+        @Bind(R.id.detail_userName) TextView userName;
+        @Bind(R.id.detail_time) TextView time;
+        @Bind(R.id.detail_floor) TextView floor;
+        @Bind(R.id.detail_content) TextView content;
+        @Bind(R.id.detail_avatar) SimpleDraweeView avatar;
 
         public ViewHolder(View view) {
             super(view);
-            ButterKnife.inject(this, view);
+            ButterKnife.bind(this, view);
         }
     }
 
