@@ -3,6 +3,7 @@ package me.sweetll.v2ex;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -10,20 +11,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 
 import com.astuetz.PagerSlidingTabStrip;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import me.sweetll.v2ex.Adapter.ArticleListFragmentAdapter;
+import me.sweetll.v2ex.Fragment.ArticleListFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener {
     @Bind(R.id.drawer_layout) DrawerLayout drawerLayout;
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.viewpager) ViewPager viewPager;
     @Bind(R.id.tabs) PagerSlidingTabStrip tabStrip;
     @Bind(R.id.appbar_layout) AppBarLayout appBarLayout;
     ActionBarDrawerToggle drawerToggle;
+    ArticleListFragmentAdapter viewPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +39,12 @@ public class MainActivity extends AppCompatActivity {
         drawerToggle = setupDrawerToggle();
         drawerLayout.setDrawerListener(drawerToggle);
 
-        viewPager.setAdapter(new ArticleListFragmentAdapter(getSupportFragmentManager()));
+        viewPagerAdapter = new ArticleListFragmentAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(viewPagerAdapter);
         tabStrip.setViewPager(viewPager);
 
     }
+
     private ActionBarDrawerToggle setupDrawerToggle() {
         return new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open,  R.string.drawer_close);
     }
@@ -73,6 +79,51 @@ public class MainActivity extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
 
         drawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    //Fix CoordinatorLayout and SwipeRefreshLayout conflict
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        appBarLayout.addOnOffsetChangedListener(this);
+    }
+
+    @Override
+    protected void onStop() {
+        appBarLayout.removeOnOffsetChangedListener(this);
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        viewPagerAdapter.destroy();
+        super.onDestroy();
+    }
+
+    int index = 0;
+
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int i) { index = i;}
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        final int action = MotionEventCompat.getActionMasked(ev);
+        switch (action) {
+            case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                ArticleListFragment pageFragment = viewPagerAdapter.getFragment(viewPager.getCurrentItem());
+                if (pageFragment != null) {
+                    if (index == 0) {
+                        pageFragment.setSwipeToRefreshEnabled(true);
+                    } else {
+                        pageFragment.setSwipeToRefreshEnabled(false);
+                    }
+                }
+                break;
+        }
+        return super.dispatchTouchEvent(ev);
     }
 
 }

@@ -1,5 +1,6 @@
 package me.sweetll.v2ex.Fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -9,6 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -24,7 +28,7 @@ public class ArticleListFragment extends Fragment {
 
     private int mPage;
 
-    @Bind(R.id.list_swipe) SwipeRefreshLayout waveSwipeRefreshLayout;
+    @Bind(R.id.list_swipe) SwipeRefreshLayout refreshLayout;
     @Bind(R.id.article_list) RecyclerView recyclerView;
 
     public static ArticleListFragment newInstance(int page) {
@@ -47,12 +51,37 @@ public class ArticleListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_article_list, container, false);
         ButterKnife.bind(this, view);
-//        TextView tvTitle = (TextView) view.findViewById(R.id.tvTitle);
-//        tvTitle.setText("Fragment #" + mPage);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(container.getContext()));
         String[] testSet = {"title1", "title2", "title3"};
         recyclerView.setAdapter(new ArticleListRecyclerViewAdapter(testSet));
         return view;
+    }
+
+    //Fix conflict with CoordinatorLayout
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (refreshLayout != null) {
+            refreshLayout.setRefreshing(false);
+            refreshLayout.setEnabled(false);
+            refreshLayout.destroyDrawingCache();
+            refreshLayout.clearAnimation();
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+    }
+
+    public void setSwipeToRefreshEnabled(boolean enabled) {
+        refreshLayout.setEnabled(enabled);
     }
 }

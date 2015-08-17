@@ -19,8 +19,10 @@
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:minHeight="?attr/actionBarSize"
-                    android:fitsSystemWindows="true"
                     android:background="?attr/colorPrimary"
+                    android:fitsSystemWindows="true"
+                    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                     app:layout_scrollFlags="scroll|enterAlways"/>
 
                 <com.astuetz.PagerSlidingTabStrip
@@ -39,8 +41,10 @@
         <android.support.v4.view.ViewPager
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white" />
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        </android.support.v4.view.ViewPager>
 
     </android.support.design.widget.CoordinatorLayout>
 
