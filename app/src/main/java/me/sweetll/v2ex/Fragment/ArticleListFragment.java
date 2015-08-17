@@ -1,6 +1,7 @@
 package me.sweetll.v2ex.Fragment;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -28,7 +29,7 @@ public class ArticleListFragment extends Fragment {
 
     private int mPage;
 
-    @Bind(R.id.list_swipe) SwipeRefreshLayout refreshLayout;
+    @Bind(R.id.list_swipe) WaveSwipeRefreshLayout refreshLayout;
     @Bind(R.id.article_list) RecyclerView recyclerView;
 
     public static ArticleListFragment newInstance(int page) {
@@ -55,6 +56,8 @@ public class ArticleListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(container.getContext()));
         String[] testSet = {"title1", "title2", "title3"};
         recyclerView.setAdapter(new ArticleListRecyclerViewAdapter(testSet));
+
+        refreshLayout.setWaveColor(getResources().getColor(R.color.Primary));
         return view;
     }
 
