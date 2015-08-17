@@ -1,30 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="white">#FFFFFFFF</color>
-    <color name="transparent">#00000000</color>
-    <color name="primary">#03A9F4</color>
-    <color name="primary_dark">#0288D1</color>
-    <color name="primary_light">#B3E5FC</color>
-    <color name="text">#FFFFFF</color>
-    <color name="disable_text">#77FFFFFF</color>
-    <color name="primary_text">#212121</color>
-    <color name="secondary_text">#727272</color>
-    <color name="divider">#1FFFFFFF</color>
-    <color name="divider_dark">#1F000000</color>
-    <color name="accent">#FF4081</color>
+    <color name="Primary">#03A9F4</color>
+    <color name="PrimaryDark">#0288D1</color>
+    <color name="Accent">#FF4081</color>
 
-    <color name="background_light">#fffafafa</color>
-    <color name="background_little_light">#ffe5e5e5</color>
-
-    <color name="gplus_color_1">#3e802f</color>
-    <color name="gplus_color_2">#f4b400</color>
-    <color name="gplus_color_3">#427fed</color>
-    <color name="gplus_color_4">#b23424</color>
-
-    <integer-array name="gplus_colors">
-        <item>@color/gplus_color_1</item>
-        <item>@color/gplus_color_2</item>
-        <item>@color/gplus_color_3</item>
-        <item>@color/gplus_color_4</item>
-    </integer-array>
+    <color name="White">#FFFFFF</color>
+    <color name="DarkGray">#A9A9A9</color>
 </resources>
