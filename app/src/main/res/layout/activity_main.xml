@@ -28,9 +28,9 @@
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                     app:layout_scrollFlags="scroll|enterAlways">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                    <!--<RelativeLayout-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="match_parent">-->
                         <!--<org.liuyichen.dribsearch.DribSearchView-->
                             <!--android:id="@+id/drib_searchview"-->
                             <!--android:layout_width="match_parent"-->
@@ -50,7 +50,7 @@
                             <!--android:layout_marginRight="30dp"-->
                             <!--android:visibility="gone"-->
                             <!--android:background="@null"/>-->
-                    </RelativeLayout>
+                    <!--</RelativeLayout>-->
 
                     </android.support.v7.widget.Toolbar>
 
