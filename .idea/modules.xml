@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/V2EX.iml" filepath="$PROJECT_DIR$/V2EX.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dribSearch/dribSearch.iml" filepath="$PROJECT_DIR$/dribSearch/dribSearch.iml" />
     </modules>
   </component>
 </project>

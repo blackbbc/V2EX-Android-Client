@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOf
         viewPagerAdapter = new ArticleListFragmentAdapter(getSupportFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
         tabStrip.setViewPager(viewPager);
-
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
