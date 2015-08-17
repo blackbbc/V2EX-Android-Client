@@ -57,6 +57,7 @@ public class ArticleListFragment extends Fragment {
         String[] testSet = {"title1", "title2", "title3"};
         recyclerView.setAdapter(new ArticleListRecyclerViewAdapter(testSet));
 
+        refreshLayout.setColorSchemeColors(Color.WHITE, Color.WHITE);
         refreshLayout.setWaveColor(getResources().getColor(R.color.Primary));
         return view;
     }
