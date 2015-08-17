@@ -1,8 +1,8 @@
 package me.sweetll.v2ex;
 
-import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,12 +10,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.astuetz.PagerSlidingTabStrip;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import me.sweetll.v2ex.Fragment.ArticleListFragmentAdapter;
 
 public class MainActivity extends AppCompatActivity {
     @Bind(R.id.drawer_layout) DrawerLayout drawerLayout;
     @Bind(R.id.toolbar) Toolbar toolbar;
+    @Bind(R.id.viewpager) ViewPager viewPager;
+    @Bind(R.id.tabs) PagerSlidingTabStrip tabStrip;
     ActionBarDrawerToggle drawerToggle;
 
     @Override
@@ -27,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         drawerToggle = setupDrawerToggle();
         drawerLayout.setDrawerListener(drawerToggle);
+
+        viewPager.setAdapter(new ArticleListFragmentAdapter(getSupportFragmentManager()));
+        tabStrip.setViewPager(viewPager);
 
     }
     private ActionBarDrawerToggle setupDrawerToggle() {
