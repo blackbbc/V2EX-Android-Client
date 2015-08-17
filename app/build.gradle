@@ -19,6 +19,12 @@ android {
     }
 }
 
+repositories {
+    maven {
+        url "https://jitpack.io"
+    }
+}
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:22.2.1'
@@ -29,7 +35,9 @@ dependencies {
     //must have libraries
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.orhanobut:logger:1.11'
+    compile 'com.squareup.picasso:picasso:2.5.2'
     //3rd-party libraries
     compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
     compile 'de.hdodenhof:circleimageview:1.3.0'
+    compile 'com.github.recruit-lifestyle:WaveSwipeRefreshLayout:1.2'
 }

@@ -2,6 +2,7 @@ package me.sweetll.v2ex;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,13 +15,14 @@ import com.astuetz.PagerSlidingTabStrip;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import me.sweetll.v2ex.Fragment.ArticleListFragmentAdapter;
+import me.sweetll.v2ex.Adapter.ArticleListFragmentAdapter;
 
 public class MainActivity extends AppCompatActivity {
     @Bind(R.id.drawer_layout) DrawerLayout drawerLayout;
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.viewpager) ViewPager viewPager;
     @Bind(R.id.tabs) PagerSlidingTabStrip tabStrip;
+    @Bind(R.id.appbar_layout) AppBarLayout appBarLayout;
     ActionBarDrawerToggle drawerToggle;
 
     @Override

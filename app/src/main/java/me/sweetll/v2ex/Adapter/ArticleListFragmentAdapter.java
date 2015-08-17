@@ -1,8 +1,10 @@
-package me.sweetll.v2ex.Fragment;
+package me.sweetll.v2ex.Adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+
+import me.sweetll.v2ex.Fragment.ArticleListFragment;
 
 /**
  * Created by sweet on 15-8-17.
