@@ -1,1 +1,1 @@
-include ':app', ':dribSearch'
+include ':app'
