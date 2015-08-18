@@ -7,5 +7,5 @@
     <string name="drawer_open">Drawer Open</string>
     <string name="drawer_close">Drawer Close</string>
 
-    <string name="path_search">M141,17 A9,9 0 1,1 142,16 L149,23</string>
+    <string name="path_search">M271,17 A9,9 0 1,1 272,16 L279,23</string>
 </resources>

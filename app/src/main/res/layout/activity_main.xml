@@ -28,29 +28,23 @@
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                     app:layout_scrollFlags="scroll|enterAlways">
 
-                    <!--<RelativeLayout-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="match_parent">-->
-                        <!--<org.liuyichen.dribsearch.DribSearchView-->
-                            <!--android:id="@+id/drib_searchview"-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:layout_height="match_parent"-->
-                            <!--android:paddingTop="18dp"-->
-                            <!--android:paddingBottom="18dp"-->
-                            <!--app:breadth="2"-->
-                            <!--app:search_color="#FFF" />-->
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
-                        <!--<EditText-->
-                            <!--android:id="@+id/editview"-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:layout_height="30dp"-->
-                            <!--android:layout_centerVertical="true"-->
-                            <!--android:layout_marginLeft="8dp"-->
-                            <!--android:layout_marginBottom="20dp"-->
-                            <!--android:layout_marginRight="30dp"-->
-                            <!--android:visibility="gone"-->
-                            <!--android:background="@null"/>-->
-                    <!--</RelativeLayout>-->
+                        <ImageView
+                            android:id="@+id/search_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="24dp"
+                            android:src="@drawable/search_bar"/>
+
+                        <EditText
+                            android:id="@+id/search_edit_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="22dp"
+                            android:paddingStart="4dp"
+                            android:background="@null"/>
+                    </FrameLayout>
 
                     </android.support.v7.widget.Toolbar>
 

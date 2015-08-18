@@ -1,6 +1,8 @@
 package me.sweetll.v2ex;
 
+import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.drawable.AnimatedVectorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.view.MotionEventCompat;
@@ -12,11 +14,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.Interpolator;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.astuetz.PagerSlidingTabStrip;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import me.sweetll.v2ex.Adapter.ArticleListFragmentAdapter;
 import me.sweetll.v2ex.Fragment.ArticleListFragment;
 
@@ -26,8 +35,19 @@ public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOf
     @Bind(R.id.viewpager) ViewPager viewPager;
     @Bind(R.id.tabs) PagerSlidingTabStrip tabStrip;
     @Bind(R.id.appbar_layout) AppBarLayout appBarLayout;
-    ActionBarDrawerToggle drawerToggle;
-    ArticleListFragmentAdapter viewPagerAdapter;
+    @Bind(R.id.search_view) ImageView searchView;
+    @Bind(R.id.search_edit_text) EditText searchEditText;
+    private AnimatedVectorDrawable searchToBar;
+    private AnimatedVectorDrawable barToSearch;
+    private ActionBarDrawerToggle drawerToggle;
+    private ArticleListFragmentAdapter viewPagerAdapter;
+
+    //For Search View
+    private float offset;
+    private Interpolator interpolator;
+    private int duration;
+    private boolean expanded = true;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +62,47 @@ public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOf
         viewPagerAdapter = new ArticleListFragmentAdapter(getSupportFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
         tabStrip.setViewPager(viewPager);
+
+        searchToBar = (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.anim_search_to_bar);
+        barToSearch = (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.anim_bar_to_search);
+
+        interpolator = AnimationUtils.loadInterpolator(this, android.R.interpolator.linear_out_slow_in);
+        duration = 700;
+
+        offset = 0f * (int) getResources().getDisplayMetrics().scaledDensity;
+        searchView.setTranslationX(offset);
+
+        animate();
+    }
+
+    @OnClick(R.id.search_view)
+    void animate() {
+        if (!expanded) {
+            searchView.setImageDrawable(searchToBar);
+            searchToBar.start();
+            searchView.animate().translationX(0f).setDuration(duration).setInterpolator(interpolator);
+            searchEditText.animate().alpha(1f).setStartDelay(duration - 100).setDuration(100).setInterpolator(interpolator);
+            searchEditText.setVisibility(View.VISIBLE);
+            searchEditText.requestFocus();
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(searchEditText, InputMethodManager.SHOW_IMPLICIT);
+        } else {
+            searchView.setImageDrawable(barToSearch);
+            barToSearch.start();
+            searchView.animate().translationX(offset).setDuration(duration).setInterpolator(interpolator);
+            searchEditText.setAlpha(0f);
+            searchEditText.setVisibility(View.INVISIBLE);
+        }
+        expanded = !expanded;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (expanded) {
+            animate();
+        } else {
+            this.finish();
+        }
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
