@@ -2,6 +2,7 @@ package me.sweetll.v2ex;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -63,6 +64,10 @@ public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOf
         viewPager.setAdapter(viewPagerAdapter);
         tabStrip.setViewPager(viewPager);
 
+        initSearchView();
+    }
+
+    void initSearchView() {
         searchToBar = (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.anim_search_to_bar);
         barToSearch = (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.anim_bar_to_search);
 
