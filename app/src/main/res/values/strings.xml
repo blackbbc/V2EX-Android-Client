@@ -6,5 +6,6 @@
 
     <string name="drawer_open">Drawer Open</string>
     <string name="drawer_close">Drawer Close</string>
-    <string name="title_activity_detail_page">DetailPageActivity</string>
+
+    <string name="path_search">M271,17 A9,9 0 1,1 272,16 L279,23</string>
 </resources>
