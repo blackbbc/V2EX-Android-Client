@@ -1,6 +1,7 @@
 package me.sweetll.v2ex.Adapter;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ public class ArticleListRecyclerViewAdapter extends RecyclerView.Adapter<Article
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.info_text) TextView textView;
+        @Bind(R.id.list_card) CardView listCard;
         public ViewHolder(View v) {
             super(v);
             ButterKnife.bind(this, v);

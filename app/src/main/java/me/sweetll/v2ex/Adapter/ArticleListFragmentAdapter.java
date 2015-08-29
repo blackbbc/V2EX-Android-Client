@@ -15,8 +15,8 @@ import me.sweetll.v2ex.Fragment.ArticleListFragment;
 public class ArticleListFragmentAdapter extends FragmentPagerAdapter {
     private Map<Integer, ArticleListFragment> fragmentMap = new HashMap<>();
 
-    final int PAGE_COUNT = 3;
-    private String tabTitles[] = new String[] { "Tab1", "Tab2", "Tab3" };
+    private String tabTitles[] = new String[] { "技术", "创意", "好玩", "Apple", "酷工作", "交易", "城市", "问与答", "最热", "全部", "R2" };
+    final int PAGE_COUNT = tabTitles.length;
 
     public ArticleListFragmentAdapter(FragmentManager fm) {
         super(fm);

@@ -23,6 +23,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.orhanobut.logger.Logger;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -53,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOf
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fresco.initialize(this);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
@@ -68,8 +71,8 @@ public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOf
     }
 
     void initSearchView() {
-        searchToBar = (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.anim_search_to_bar);
-        barToSearch = (AnimatedVectorDrawable) getResources().getDrawable(R.drawable.anim_bar_to_search);
+        searchToBar = (AnimatedVectorDrawable) getDrawable(R.drawable.anim_search_to_bar);
+        barToSearch = (AnimatedVectorDrawable) getDrawable(R.drawable.anim_bar_to_search);
 
         interpolator = AnimationUtils.loadInterpolator(this, android.R.interpolator.linear_out_slow_in);
         duration = 700;
