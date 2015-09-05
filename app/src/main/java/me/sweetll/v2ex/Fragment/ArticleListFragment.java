@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -38,6 +39,7 @@ import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
 import me.sweetll.v2ex.Adapter.ArticleListRecyclerViewAdapter;
 import me.sweetll.v2ex.DataStructure.Post;
 import me.sweetll.v2ex.R;
+import me.sweetll.v2ex.Utils.GlobalGlass;
 
 /**
  * Created by sweet on 15-8-17.
@@ -59,7 +61,6 @@ public class ArticleListFragment extends Fragment {
     };
 
     private int mPage;
-    private RequestQueue queue;
     private StringRequest stringRequest;
     private ArticleListRecyclerViewAdapter recyclerViewAdapter;
     private String url;
@@ -69,7 +70,7 @@ public class ArticleListFragment extends Fragment {
 
     private void refreshList() {
         Logger.d(url);
-        queue.add(stringRequest);
+        GlobalGlass.getQueue().add(stringRequest);
     }
 
     public static ArticleListFragment newInstance(int page) {
@@ -83,7 +84,6 @@ public class ArticleListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        queue = Volley.newRequestQueue(getActivity());
         mPage = getArguments().getInt(ARG_PAGE);
         url = TAB_URLS[mPage - 1];
         stringRequest = new StringRequest(Request.Method.GET, url,
@@ -120,8 +120,15 @@ public class ArticleListFragment extends Fragment {
                             }
                             recyclerViewAdapter.add(new Post(list_title, list_userName, list_time, list_tag, list_reply, list_imageSrc, list_src));
                         }
+
                         recyclerViewAdapter.notifyDataSetChanged();
-                        refreshLayout.setRefreshing(false);
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                refreshLayout.setRefreshing(false);
+                            }
+                        }, 500);
+
                     }
                 }, new Response.ErrorListener() {
             @Override

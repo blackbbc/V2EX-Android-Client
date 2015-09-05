@@ -31,6 +31,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.sweetll.v2ex.Adapter.ArticleListFragmentAdapter;
 import me.sweetll.v2ex.Fragment.ArticleListFragment;
+import me.sweetll.v2ex.Utils.GlobalGlass;
 
 public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener {
     @Bind(R.id.drawer_layout) DrawerLayout drawerLayout;
@@ -59,12 +60,15 @@ public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOf
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        GlobalGlass.Initialize(getApplicationContext());
+
         setSupportActionBar(toolbar);
         drawerToggle = setupDrawerToggle();
         drawerLayout.setDrawerListener(drawerToggle);
 
         viewPagerAdapter = new ArticleListFragmentAdapter(getSupportFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
+        viewPager.setOffscreenPageLimit(11);
         tabStrip.setViewPager(viewPager);
 
         initSearchView();
