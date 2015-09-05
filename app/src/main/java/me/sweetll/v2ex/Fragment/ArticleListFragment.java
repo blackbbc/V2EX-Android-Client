@@ -27,6 +27,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,6 +36,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
 import me.sweetll.v2ex.Adapter.ArticleListRecyclerViewAdapter;
+import me.sweetll.v2ex.DataStructure.Post;
 import me.sweetll.v2ex.R;
 
 /**
@@ -57,39 +60,16 @@ public class ArticleListFragment extends Fragment {
 
     private int mPage;
     private RequestQueue queue;
+    private StringRequest stringRequest;
+    private ArticleListRecyclerViewAdapter recyclerViewAdapter;
+    private String url;
 
     @Bind(R.id.list_swipe) WaveSwipeRefreshLayout refreshLayout;
     @Bind(R.id.article_list) RecyclerView recyclerView;
 
     private void refreshList() {
-        String url = TAB_URLS[mPage - 1];
         Logger.d(url);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Document document = Jsoup.parse(response);
-
-                        Elements cells = document.select("div.cell.item");
-                        for (Element cell : cells) {
-                            String list_url = cell.select("span.item_title>a").first().attr("href");
-                            String list_title = cell.select("span.item_title>a").first().text();
-                            String list_node = cell.select("a.node").first().text();
-                            Element smallFade = cell.select("span.small.fade").first();
-                            Logger.d(smallFade.html());
-                            Logger.d(smallFade.text());
-                        }
-
-                        refreshLayout.setRefreshing(false);
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Logger.d("Volley Error");
-            }
-        });
         queue.add(stringRequest);
-
     }
 
     public static ArticleListFragment newInstance(int page) {
@@ -105,6 +85,50 @@ public class ArticleListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         queue = Volley.newRequestQueue(getActivity());
         mPage = getArguments().getInt(ARG_PAGE);
+        url = TAB_URLS[mPage - 1];
+        stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Document document = Jsoup.parse(response);
+
+                        String list_title;
+                        String list_userName;
+                        String list_time;
+                        String list_tag;
+                        String list_reply;
+                        String list_imageSrc;
+                        String list_src;
+
+                        Elements cells = document.select("div.cell.item");
+                        for (Element cell : cells) {
+                            list_src = cell.select("span.item_title>a").first().attr("href").split("#")[0];
+                            list_imageSrc = cell.select("img.avatar").first().attr("src");
+                            list_title = cell.select("span.item_title>a").first().text();
+                            list_tag = cell.select("a.node").first().text();
+                            list_userName = cell.select("strong").first().text();
+                            list_reply = cell.select("a.count_livid").text();
+                            list_reply = list_reply.isEmpty()? "0": list_reply;
+                            String small_fade = cell.select("span.small.fade").eq(1).text();
+                            list_time = small_fade.split(" \u00a0•\u00a0 ")[0];
+
+                            try {
+                                list_src = new URL(new URL(url), list_src).toString();
+                                list_imageSrc = new URL(new URL(url), list_imageSrc).toString();
+                            } catch (MalformedURLException e) {
+                                e.printStackTrace();
+                            }
+                            recyclerViewAdapter.add(new Post(list_title, list_userName, list_time, list_tag, list_reply, list_imageSrc, list_src));
+                        }
+                        recyclerViewAdapter.notifyDataSetChanged();
+                        refreshLayout.setRefreshing(false);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Logger.d("Volley Error");
+            }
+        });
     }
 
     // Inflate the fragment layout we defined above for this fragment
@@ -115,13 +139,13 @@ public class ArticleListFragment extends Fragment {
         ButterKnife.bind(this, view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(container.getContext()));
-        String[] testSet = {"title1", "title2", "title3"};
-        recyclerView.setAdapter(new ArticleListRecyclerViewAdapter(testSet));
+        recyclerViewAdapter = new ArticleListRecyclerViewAdapter();
+        recyclerView.setAdapter(recyclerViewAdapter);
         recyclerView.addItemDecoration(
                 new HorizontalDividerItemDecoration.Builder(getActivity())
-                    .color(getResources().getColor(R.color.background_material_light))
-                    .sizeResId(R.dimen.divider_size)
-                    .build()
+                        .color(getResources().getColor(R.color.background_material_light))
+                        .sizeResId(R.dimen.divider_size)
+                        .build()
         );
 
         refreshLayout.setColorSchemeColors(Color.WHITE, Color.WHITE);
@@ -129,7 +153,6 @@ public class ArticleListFragment extends Fragment {
         refreshLayout.setOnRefreshListener(new WaveSwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-//                new RefreshListTask().execute();
                 refreshList();
             }
         });
