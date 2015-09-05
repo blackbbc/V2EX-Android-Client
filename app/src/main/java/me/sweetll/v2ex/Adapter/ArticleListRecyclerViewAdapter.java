@@ -19,7 +19,6 @@ public class ArticleListRecyclerViewAdapter extends RecyclerView.Adapter<Article
     private String[] titles;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.info_text) TextView textView;
         @Bind(R.id.list_card) CardView listCard;
         public ViewHolder(View v) {
             super(v);
@@ -40,7 +39,7 @@ public class ArticleListRecyclerViewAdapter extends RecyclerView.Adapter<Article
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.textView.setText(titles[position]);
+//        holder.textView.setText(titles[position]);
     }
 
     @Override

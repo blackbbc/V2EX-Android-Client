@@ -20,6 +20,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.orhanobut.logger.Logger;
+import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -116,6 +117,12 @@ public class ArticleListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(container.getContext()));
         String[] testSet = {"title1", "title2", "title3"};
         recyclerView.setAdapter(new ArticleListRecyclerViewAdapter(testSet));
+        recyclerView.addItemDecoration(
+                new HorizontalDividerItemDecoration.Builder(getActivity())
+                    .color(getResources().getColor(R.color.background_material_light))
+                    .sizeResId(R.dimen.divider_size)
+                    .build()
+        );
 
         refreshLayout.setColorSchemeColors(Color.WHITE, Color.WHITE);
         refreshLayout.setWaveColor(getResources().getColor(R.color.Primary));
