@@ -8,29 +8,38 @@
     tools:context=".MainActivity">
 
     <android.support.design.widget.CoordinatorLayout
-        android:fitsSystemWindows="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="82dp"
+            android:fitsSystemWindows="true"
             android:id="@+id/appbar_layout">
+
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:minHeight="?attr/actionBarSize"
+                android:fitsSystemWindows="true"
+                app:layout_scrollFlags="scroll|enterAlwaysCollapsed|enterAlways">
 
                 <!-- The ActionBar -->
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
-                    android:layout_height="wrap_content"
+                    android:layout_height="?attr/actionBarSize"
                     android:layout_width="match_parent"
-                    android:minHeight="?attr/actionBarSize"
                     android:background="?attr/colorPrimary"
+                    android:fitsSystemWindows="false"
                     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                    app:layout_collapseMode="pin"
                     app:layout_scrollFlags="scroll|enterAlways">
 
                     <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:paddingTop="16dp">
 
                         <ImageView
                             android:id="@+id/search_view"
@@ -48,26 +57,36 @@
 
                     </android.support.v7.widget.Toolbar>
 
-                <com.astuetz.PagerSlidingTabStrip
-                    android:id="@+id/tabs"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:textColor="#FFFFFF"
-                    app:pstsIndicatorColor="?attr/colorAccent"
-                    app:pstsIndicatorHeight="3dp"
-                    app:pstsShouldExpand="true"
-                    app:pstsTextAllCaps="true">
-                </com.astuetz.PagerSlidingTabStrip>
+                </android.support.design.widget.CollapsingToolbarLayout>
 
         </android.support.design.widget.AppBarLayout>
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/viewpager"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/background_material_light"
+            android:orientation="vertical"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        </android.support.v4.view.ViewPager>
+
+            <com.astuetz.PagerSlidingTabStrip
+                android:id="@+id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:textColor="#FFFFFF"
+                android:background="?attr/colorPrimary"
+                app:pstsIndicatorColor="?attr/colorAccent"
+                app:pstsIndicatorHeight="3dp"
+                app:pstsShouldExpand="true"
+                app:pstsTextAllCaps="true">
+            </com.astuetz.PagerSlidingTabStrip>
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/background_material_light">
+            </android.support.v4.view.ViewPager>
+
+        </LinearLayout>
 
     </android.support.design.widget.CoordinatorLayout>
 
