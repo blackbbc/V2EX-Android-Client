@@ -69,7 +69,7 @@ public class ArticleListFragment extends Fragment {
     @Bind(R.id.article_list) RecyclerView recyclerView;
 
     private void refreshList() {
-        Logger.d(url);
+//        Logger.d(url);
         GlobalGlass.getQueue().add(stringRequest);
     }
 
@@ -91,6 +91,8 @@ public class ArticleListFragment extends Fragment {
                     @Override
                     public void onResponse(String response) {
                         Document document = Jsoup.parse(response);
+
+                        recyclerViewAdapter.clear();
 
                         String list_title;
                         String list_userName;

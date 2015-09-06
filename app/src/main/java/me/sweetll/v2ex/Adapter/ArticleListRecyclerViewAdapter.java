@@ -46,6 +46,10 @@ public class ArticleListRecyclerViewAdapter extends RecyclerView.Adapter<Article
         mData.add(newPost);
     }
 
+    public void clear() {
+        mData.clear();
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_list, parent, false);
