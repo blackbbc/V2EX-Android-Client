@@ -1,5 +1,6 @@
 package me.sweetll.v2ex.DataStructure;
 
+
 import org.parceler.Parcel;
 
 /**
