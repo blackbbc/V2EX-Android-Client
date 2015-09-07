@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        xmlns:fresco="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/reply_avatar"
+        android:layout_alignParentStart="true"
+        android:layout_marginEnd="16dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        fresco:roundAsCircle="true"/>
+
+    <TextView
+        android:id="@+id/reply_author"
+        android:layout_marginEnd="10dp"
+        android:layout_toEndOf="@id/reply_avatar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="crazybug"/>
+
+    <TextView
+        android:id="@+id/reply_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/reply_author"
+        android:text="1天前"/>
+
+    <TextView
+        android:id="@+id/reply_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/reply_author"
+        android:layout_alignStart="@id/reply_author"
+        android:text="做个足疗"/>
+
+</RelativeLayout>

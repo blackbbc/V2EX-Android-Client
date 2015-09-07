@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -24,7 +25,7 @@ import me.sweetll.v2ex.Widget.FitWindowView;
 public class DetailActivity extends AppCompatActivity implements FitWindowView.OnFitSystemWindowsListener{
 
     @Bind(R.id.standard) FitWindowView mStandard;
-    @Bind(R.id.scrollView) ScrollView scrollView;
+    @Bind(R.id.main) ScrollView mainLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +46,7 @@ public class DetailActivity extends AppCompatActivity implements FitWindowView.O
 
     @Override
     public void onFitSystemWindows(int l, int t, int r, int b) {
-        scrollView.setPadding(scrollView.getPaddingLeft(), t, scrollView.getPaddingRight(), b);
+        mainLayout.setPadding(mainLayout.getPaddingLeft(), t, mainLayout.getPaddingRight(), b);
 
 //        Ui.colorStatusBar(this, t - Ui.ACTION_BAR_HEIGHT);
     }
