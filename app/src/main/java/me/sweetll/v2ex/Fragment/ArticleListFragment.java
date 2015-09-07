@@ -151,7 +151,7 @@ public class ArticleListFragment extends Fragment {
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerView.addItemDecoration(
                 new HorizontalDividerItemDecoration.Builder(getActivity())
-                        .color(getResources().getColor(R.color.background_material_light))
+                        .color(getResources().getColor(R.color.divider))
                         .sizeResId(R.dimen.divider_size)
                         .build()
         );

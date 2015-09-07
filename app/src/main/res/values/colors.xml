@@ -10,4 +10,6 @@
 
     <color name="White">#FFFFFF</color>
     <color name="DarkGray">#A9A9A9</color>
+
+    <color name="divider">#1FFFFFFF</color>
 </resources>
