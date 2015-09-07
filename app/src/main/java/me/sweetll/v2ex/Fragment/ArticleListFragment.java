@@ -69,7 +69,6 @@ public class ArticleListFragment extends Fragment {
     @Bind(R.id.article_list) RecyclerView recyclerView;
 
     private void refreshList() {
-//        Logger.d(url);
         GlobalGlass.getQueue().add(stringRequest);
     }
 
