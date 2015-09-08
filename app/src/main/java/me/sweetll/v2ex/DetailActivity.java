@@ -4,11 +4,10 @@ import android.net.Uri;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ScrollView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -23,20 +22,20 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.parceler.Parcels;
+import org.solovyev.android.views.llm.LinearLayoutManager;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import me.sweetll.v2ex.Adapter.ArticleDetailRecyclerViewAdapter;
 import me.sweetll.v2ex.Adapter.ArticleReplyRecyclerViewAdapter;
-import me.sweetll.v2ex.DataStructure.Detail;
+import me.sweetll.v2ex.DataStructure.Content;
 import me.sweetll.v2ex.DataStructure.Post;
 import me.sweetll.v2ex.Utils.GlobalGlass;
-import me.sweetll.v2ex.Utils.Ui;
 import me.sweetll.v2ex.Widget.FitWindowView;
 
 public class DetailActivity extends AppCompatActivity implements FitWindowView.OnFitSystemWindowsListener{
     @Bind(R.id.standard) FitWindowView mStandard;
-    @Bind(R.id.main) ScrollView mainLayout;
+    @Bind(R.id.main) LinearLayout mainLayout;
     @Bind(R.id.detail_content) RecyclerView detailRecyclerView;
     @Bind(R.id.detail_reply) RecyclerView replyRecyclerView;
     @Bind(R.id.detail_title) TextView detailTitle;
@@ -92,15 +91,15 @@ public class DetailActivity extends AppCompatActivity implements FitWindowView.O
 
                 //首先分析content
                 detail_body = document.select("div.topic_content").html();
-                Detail body = new Detail(detail_body);
+                Content body = new Content(detail_body);
                 detailRecyclerViewAdapter.add(body);
                 //然后分析附言
                 Elements subtles = document.select("div.subtle");
                 for (Element subtle : subtles) {
                     detail_ps = subtle.select("span.fade").text();
                     detail_body = subtle.select("div.topic_content").text();
-                    Detail newDetail = new Detail(detail_ps, detail_body);
-                    detailRecyclerViewAdapter.add(newDetail);
+                    Content newContent = new Content(detail_ps, detail_body);
+                    detailRecyclerViewAdapter.add(newContent);
                 }
 
                 //最后分析reply

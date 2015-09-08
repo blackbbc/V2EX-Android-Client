@@ -1,21 +1,24 @@
 package me.sweetll.v2ex.DataStructure;
 
+import java.util.ArrayList;
+
 /**
  * Created by sweet on 15-5-9.
  */
-public class Detail {
+public class Content {
+
     String ps = "";
     String body = "";
 
-    public Detail() {
+    public Content() {
 
     }
 
-    public Detail(String body) {
+    public Content(String body) {
         this.body = body;
     }
 
-    public Detail(String ps, String body) {
+    public Content(String ps, String body) {
         this.ps = ps;
         this.body = body;
     }

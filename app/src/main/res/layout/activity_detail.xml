@@ -11,14 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <ScrollView
-        android:id="@+id/main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clipToPadding="false">
         <LinearLayout
+            android:id="@+id/main"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:scrollbars="vertical"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -66,11 +64,6 @@
                     android:text="11小时55分钟前"/>
             </RelativeLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/divider_size"
-                android:background="?android:attr/dividerHorizontal"/>
-
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/detail_content"
                 android:layout_width="match_parent"
@@ -88,8 +81,6 @@
                 android:layout_height="wrap_content">
             </android.support.v7.widget.RecyclerView>
 
-        </LinearLayout>
-
-    </ScrollView>
+    </LinearLayout>
 
 </FrameLayout>

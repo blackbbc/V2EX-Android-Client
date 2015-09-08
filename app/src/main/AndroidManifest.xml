@@ -19,9 +19,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:theme="@style/AppDetailTheme"
             android:name=".DetailActivity"
-            android:label="@string/title_activity_detail" >
+            android:label="@string/title_activity_detail"
+            android:theme="@style/AppDetailTheme" >
+        </activity>
+        <activity
+            android:name=".TempActivity"
+            android:label="@string/title_activity_temp" >
         </activity>
     </application>
 
