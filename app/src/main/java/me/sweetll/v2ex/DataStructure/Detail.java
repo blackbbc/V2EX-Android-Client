@@ -5,7 +5,6 @@ package me.sweetll.v2ex.DataStructure;
  */
 public class Detail {
     String ps = "";
-    String time = "";
     String body = "";
 
     public Detail() {
@@ -16,9 +15,8 @@ public class Detail {
         this.body = body;
     }
 
-    public Detail(String ps, String time, String body) {
+    public Detail(String ps, String body) {
         this.ps = ps;
-        this.time = time;
         this.body = body;
     }
 
@@ -28,14 +26,6 @@ public class Detail {
 
     public void setPs(String ps) {
         this.ps = ps;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
     }
 
     public String getBody() {

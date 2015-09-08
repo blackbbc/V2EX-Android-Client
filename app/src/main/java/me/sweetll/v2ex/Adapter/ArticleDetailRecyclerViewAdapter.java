@@ -33,7 +33,6 @@ public class ArticleDetailRecyclerViewAdapter extends RecyclerView.Adapter<Artic
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.content_ps) TextView contentPs;
-        @Bind(R.id.content_time) TextView contentTime;
         @Bind(R.id.content_body) TextView contentBody;
         public ViewHolder(View v) {
             super(v);
@@ -43,6 +42,12 @@ public class ArticleDetailRecyclerViewAdapter extends RecyclerView.Adapter<Artic
 
     public ArticleDetailRecyclerViewAdapter()  {
         mData = new ArrayList<>();
+        Detail detail1 = new Detail("aaa", "bbb");
+        Detail detail2 = new Detail("ccc", "ddd");
+        Detail detail3 = new Detail("eee", "fff");
+        add(detail1);
+        add(detail2);
+        add(detail3);
     }
 
     public void add(Detail newDetail) {
@@ -65,10 +70,8 @@ public class ArticleDetailRecyclerViewAdapter extends RecyclerView.Adapter<Artic
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         if (position > 0) {
             holder.contentPs.setText(mData.get(position).getPs());
-            holder.contentTime.setText(mData.get(position).getTime());
         } else {
             holder.contentPs.setVisibility(View.GONE);
-            holder.contentTime.setVisibility(View.GONE);
         }
         holder.contentBody.setText(mData.get(position).getBody());
     }

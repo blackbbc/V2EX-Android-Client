@@ -15,13 +15,6 @@
         android:layout_marginEnd="10dp"
         android:text="第一条附言"/>
     <TextView
-        android:id="@+id/content_time"
-        android:layout_toEndOf="@id/content_ps"
-        android:layout_alignTop="@id/content_ps"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="7小时15分钟前"/>
-    <TextView
         android:id="@+id/content_body"
         android:layout_below="@id/content_ps"
         android:layout_width="wrap_content"
