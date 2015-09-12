@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.HandlerThread;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -60,13 +61,70 @@ public class ArticleListFragment extends Fragment {
             "http://www.v2ex.com/?tab=r2"
     };
 
+    @Bind(R.id.list_swipe) WaveSwipeRefreshLayout refreshLayout;
+    @Bind(R.id.article_list) RecyclerView recyclerView;
+
     private int mPage;
     private StringRequest stringRequest;
     private ArticleListRecyclerViewAdapter recyclerViewAdapter;
     private String url;
 
-    @Bind(R.id.list_swipe) WaveSwipeRefreshLayout refreshLayout;
-    @Bind(R.id.article_list) RecyclerView recyclerView;
+    HandlerThread thread;
+    Handler handler;
+    class RefreshListRunnable implements Runnable {
+        String response;
+
+        public RefreshListRunnable(String response) {
+            this.response = response;
+        }
+
+        @Override
+        public void run() {
+            Logger.d("I'm on runnable");
+
+            Document document = Jsoup.parse(response);
+
+            recyclerViewAdapter.clear();
+
+            String list_title;
+            String list_userName;
+            String list_time;
+            String list_tag;
+            String list_reply;
+            String list_imageSrc;
+            String list_src;
+
+            Elements cells = document.select("div.cell.item");
+            for (Element cell : cells) {
+                list_src = cell.select("span.item_title>a").first().attr("href").split("#")[0];
+                list_imageSrc = cell.select("img.avatar").first().attr("src");
+                list_title = cell.select("span.item_title>a").first().text();
+                list_tag = cell.select("a.node").first().text();
+                list_userName = cell.select("strong").first().text();
+                list_reply = cell.select("a.count_livid").text();
+                list_reply = list_reply.isEmpty()? "0": list_reply;
+                String small_fade = cell.select("span.small.fade").eq(1).text();
+                list_time = small_fade.split(" \u00a0•\u00a0 ")[0];
+
+                try {
+                    list_src = new URL(new URL(url), list_src).toString();
+                    list_imageSrc = new URL(new URL(url), list_imageSrc).toString();
+                    recyclerViewAdapter.add(new Post(list_title, list_userName, list_time, list_tag, list_reply, list_imageSrc, list_src));
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    recyclerViewAdapter.notifyDataSetChanged();
+                    refreshLayout.setRefreshing(false);
+                }
+            });
+
+        }
+    }
 
     private void refreshList() {
         GlobalGlass.getQueue().add(stringRequest);
@@ -89,46 +147,7 @@ public class ArticleListFragment extends Fragment {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Document document = Jsoup.parse(response);
-
-                        recyclerViewAdapter.clear();
-
-                        String list_title;
-                        String list_userName;
-                        String list_time;
-                        String list_tag;
-                        String list_reply;
-                        String list_imageSrc;
-                        String list_src;
-
-                        Elements cells = document.select("div.cell.item");
-                        for (Element cell : cells) {
-                            list_src = cell.select("span.item_title>a").first().attr("href").split("#")[0];
-                            list_imageSrc = cell.select("img.avatar").first().attr("src");
-                            list_title = cell.select("span.item_title>a").first().text();
-                            list_tag = cell.select("a.node").first().text();
-                            list_userName = cell.select("strong").first().text();
-                            list_reply = cell.select("a.count_livid").text();
-                            list_reply = list_reply.isEmpty()? "0": list_reply;
-                            String small_fade = cell.select("span.small.fade").eq(1).text();
-                            list_time = small_fade.split(" \u00a0•\u00a0 ")[0];
-
-                            try {
-                                list_src = new URL(new URL(url), list_src).toString();
-                                list_imageSrc = new URL(new URL(url), list_imageSrc).toString();
-                            } catch (MalformedURLException e) {
-                                e.printStackTrace();
-                            }
-                            recyclerViewAdapter.add(new Post(list_title, list_userName, list_time, list_tag, list_reply, list_imageSrc, list_src));
-                        }
-
-                        recyclerViewAdapter.notifyDataSetChanged();
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                refreshLayout.setRefreshing(false);
-                            }
-                        }, 500);
+                        handler.post(new RefreshListRunnable(response));
 
                     }
                 }, new Response.ErrorListener() {
@@ -137,6 +156,8 @@ public class ArticleListFragment extends Fragment {
                 Logger.d("Volley Error");
             }
         });
+
+        thread = new HandlerThread("refresh_list");
     }
 
     // Inflate the fragment layout we defined above for this fragment
@@ -167,12 +188,20 @@ public class ArticleListFragment extends Fragment {
         return view;
     }
 
-    //Fix conflict with CoordinatorLayout
+    @Override
+    public void onStart() {
+        super.onStart();
+        thread.start();
+        handler = new Handler(thread.getLooper());
+    }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onStop() {
+        thread.interrupt();
+        super.onStop();
     }
+
+    //Fix conflict with CoordinatorLayout
 
     @Override
     public void onPause() {
