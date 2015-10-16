@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -28,6 +29,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import me.sweetll.v2ex.Adapter.ArticleDetailRecyclerViewAdapter;
 import me.sweetll.v2ex.Adapter.ArticleReplyRecyclerViewAdapter;
+import me.sweetll.v2ex.Adapter.FullyLinearLayoutManager;
 import me.sweetll.v2ex.DataStructure.Content;
 import me.sweetll.v2ex.DataStructure.Post;
 import me.sweetll.v2ex.Utils.GlobalGlass;
@@ -35,9 +37,9 @@ import me.sweetll.v2ex.Widget.FitWindowView;
 
 public class DetailActivity extends AppCompatActivity implements FitWindowView.OnFitSystemWindowsListener{
     @Bind(R.id.standard) FitWindowView mStandard;
-    @Bind(R.id.main) LinearLayout mainLayout;
+    @Bind(R.id.main) ScrollView mainLayout;
     @Bind(R.id.detail_content) RecyclerView detailRecyclerView;
-    @Bind(R.id.detail_reply) RecyclerView replyRecyclerView;
+//    @Bind(R.id.detail_reply) RecyclerView replyRecyclerView;
     @Bind(R.id.detail_title) TextView detailTitle;
     @Bind(R.id.detail_author) TextView detailAuthor;
     @Bind(R.id.detail_time) TextView detailTime;
@@ -67,12 +69,12 @@ public class DetailActivity extends AppCompatActivity implements FitWindowView.O
 
 
         detailRecyclerViewAdapter = new ArticleDetailRecyclerViewAdapter();
-        detailRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        detailRecyclerView.setLayoutManager(new FullyLinearLayoutManager(this));
         detailRecyclerView.setAdapter(detailRecyclerViewAdapter);
 
-        replyRecyclerViewAdapter = new ArticleReplyRecyclerViewAdapter();
-        replyRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        replyRecyclerView.setAdapter(replyRecyclerViewAdapter);
+//        replyRecyclerViewAdapter = new ArticleReplyRecyclerViewAdapter();
+//        replyRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        replyRecyclerView.setAdapter(replyRecyclerViewAdapter);
 
         url = post.getSrc();
         stringRequest = new StringRequest(Request.Method.GET, url,
@@ -126,7 +128,7 @@ public class DetailActivity extends AppCompatActivity implements FitWindowView.O
 //                }
 //
                 detailRecyclerViewAdapter.notifyDataSetChanged();
-                replyRecyclerViewAdapter.notifyDataSetChanged();
+//                replyRecyclerViewAdapter.notifyDataSetChanged();
 
                 }
             }, new Response.ErrorListener() {
@@ -142,7 +144,8 @@ public class DetailActivity extends AppCompatActivity implements FitWindowView.O
 
     @Override
     public void onFitSystemWindows(int l, int t, int r, int b) {
-        mainLayout.setPadding(mainLayout.getPaddingLeft(), t, mainLayout.getPaddingRight(), b);
+//        mainLayout.setPadding(mainLayout.getPaddingLeft(), t, mainLayout.getPaddingRight(), 0);
+        mainLayout.setPadding(mainLayout.getPaddingLeft(), t, mainLayout.getPaddingRight(), mainLayout.getPaddingBottom());
 
 //        Ui.colorStatusBar(this, t - Ui.ACTION_BAR_HEIGHT);
     }

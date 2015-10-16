@@ -19,11 +19,11 @@ public class TempActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_temp);
 
-        recyclerView = (RecyclerView)findViewById(R.id.recyclerView_temp);
+//        recyclerView = (RecyclerView)findViewById(R.id.recyclerView_temp);
 
-        recyclerViewAdapter = new ArticleDetailRecyclerViewAdapter();
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(recyclerViewAdapter);
+//        recyclerViewAdapter = new ArticleDetailRecyclerViewAdapter();
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        recyclerView.setAdapter(recyclerViewAdapter);
     }
 
     @Override
