@@ -71,6 +71,7 @@ public class ArticleListFragment extends Fragment {
 
     HandlerThread thread;
     Handler handler;
+    boolean isRunning;
     class RefreshListRunnable implements Runnable {
         String response;
 
@@ -158,6 +159,8 @@ public class ArticleListFragment extends Fragment {
         });
 
         thread = new HandlerThread("refresh_list");
+        thread.start();
+        handler = new Handler(thread.getLooper());
     }
 
     // Inflate the fragment layout we defined above for this fragment
@@ -191,14 +194,13 @@ public class ArticleListFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        thread.start();
-        handler = new Handler(thread.getLooper());
+        this.isRunning = true;
     }
 
     @Override
     public void onStop() {
-        thread.interrupt();
         super.onStop();
+        this.isRunning = false;
     }
 
     //Fix conflict with CoordinatorLayout
