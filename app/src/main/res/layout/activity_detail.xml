@@ -12,81 +12,69 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <ScrollView
-        android:id="@+id/main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-        <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical"
-        android:orientation="vertical">
+        <!--<RelativeLayout-->
+            <!--android:paddingTop="10dp"-->
+            <!--android:paddingBottom="10dp"-->
+            <!--android:paddingStart="16dp"-->
+            <!--android:paddingEnd="16dp"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content">-->
+            <!--<com.facebook.drawee.view.SimpleDraweeView-->
+                <!--xmlns:fresco="http://schemas.android.com/apk/res-auto"-->
+                <!--android:id="@+id/detail_avatar"-->
+                <!--android:layout_alignParentEnd="true"-->
+                <!--android:layout_width="48dp"-->
+                <!--android:layout_height="48dp"-->
+                <!--fresco:roundedCornerRadius="5dp" />-->
+            <!--<TextView-->
+                <!--android:id="@+id/detail_title"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_toStartOf="@id/detail_avatar"-->
+                <!--android:layout_alignParentStart="true"-->
+                <!--android:textAppearance="?android:attr/textAppearanceMedium"-->
+                <!--android:textColor="@color/primary_text_default_material_light"-->
+                <!--android:text="[福利活动] 9 月 9 日夜，来 DotGeek 极客咖啡「吐槽」苹果 2015 新品发布会" />-->
+            <!--<TextView-->
+                <!--android:id="@+id/detail_author"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_below="@id/detail_title"-->
+                <!--android:text="lwj0012"/>-->
+            <!--<TextView-->
+                <!--android:id="@+id/text_dot"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_toEndOf="@id/detail_author"-->
+                <!--android:layout_alignTop="@id/detail_author"-->
+                <!--android:text=" • "/>-->
+            <!--<TextView-->
+                <!--android:id="@+id/detail_time"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_toEndOf="@id/text_dot"-->
+                <!--android:layout_alignTop="@id/detail_author"-->
+                <!--android:text="11小时55分钟前"/>-->
+        <!--</RelativeLayout>-->
 
-            <RelativeLayout
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <com.facebook.drawee.view.SimpleDraweeView
-                    xmlns:fresco="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/detail_avatar"
-                    android:layout_alignParentEnd="true"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    fresco:roundedCornerRadius="5dp" />
-                <TextView
-                    android:id="@+id/detail_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toStartOf="@id/detail_avatar"
-                    android:layout_alignParentStart="true"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/primary_text_default_material_light"
-                    android:text="[福利活动] 9 月 9 日夜，来 DotGeek 极客咖啡「吐槽」苹果 2015 新品发布会" />
-                <TextView
-                    android:id="@+id/detail_author"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/detail_title"
-                    android:text="lwj0012"/>
-                <TextView
-                    android:id="@+id/text_dot"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/detail_author"
-                    android:layout_alignTop="@id/detail_author"
-                    android:text=" • "/>
-                <TextView
-                    android:id="@+id/detail_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/text_dot"
-                    android:layout_alignTop="@id/detail_author"
-                    android:text="11小时55分钟前"/>
-            </RelativeLayout>
+        <!--<android.support.v7.widget.RecyclerView-->
+            <!--android:id="@+id/detail_content"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content">-->
+        <!--</android.support.v7.widget.RecyclerView>-->
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/detail_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </android.support.v7.widget.RecyclerView>
+        <!--<View-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/divider_size"-->
+            <!--android:background="?android:attr/dividerHorizontal"/>-->
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/divider_size"
-                android:background="?android:attr/dividerHorizontal"/>
-
-            <!--<android.support.v7.widget.RecyclerView-->
-                <!--android:id="@+id/detail_reply"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content">-->
-            <!--</android.support.v7.widget.RecyclerView>-->
-
-        </LinearLayout>
-    </ScrollView>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/article_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false">
+        </android.support.v7.widget.RecyclerView>
 
 
 </FrameLayout>

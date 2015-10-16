@@ -2,17 +2,13 @@ package me.sweetll.v2ex;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import me.sweetll.v2ex.Adapter.ArticleDetailRecyclerViewAdapter;
-
 public class TempActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    ArticleDetailRecyclerViewAdapter recyclerViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
