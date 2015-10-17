@@ -9,8 +9,8 @@
         <item name="android:windowTranslucentStatus">true</item>
 
         <item name="android:windowContentTransitions">true</item>
-        <item name="android:windowAllowEnterTransitionOverlap">false</item>
-        <item name="android:windowAllowReturnTransitionOverlap">false</item>
+        <item name="android:windowSharedElementEnterTransition">@transition/my_transition</item>
+        <item name="android:windowSharedElementExitTransition">@transition/my_transition</item>
     </style>
 
     <style name="AppDetailTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -22,7 +22,7 @@
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
 
         <item name="android:windowContentTransitions">true</item>
-        <item name="android:windowAllowEnterTransitionOverlap">false</item>
-        <item name="android:windowAllowReturnTransitionOverlap">false</item>
+        <item name="android:windowSharedElementEnterTransition">@transition/my_transition</item>
+        <item name="android:windowSharedElementExitTransition">@transition/my_transition</item>
     </style>
 </resources>

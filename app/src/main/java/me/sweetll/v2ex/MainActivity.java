@@ -1,10 +1,15 @@
 package me.sweetll.v2ex;
 
+import android.app.SharedElementCallback;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Matrix;
+import android.graphics.RectF;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewPager;
@@ -26,9 +31,13 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.orhanobut.logger.Logger;
 
+import java.util.List;
+import java.util.Map;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import me.drakeet.library.CrashWoodpecker;
 import me.sweetll.v2ex.Adapter.ArticleListFragmentAdapter;
 import me.sweetll.v2ex.Fragment.ArticleListFragment;
 import me.sweetll.v2ex.Utils.GlobalGlass;
@@ -52,13 +61,33 @@ public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOf
     private int duration;
     private boolean expanded = true;
 
+    private SharedElementCallback mCallback = new SharedElementCallback() {
+        @Override
+        public void onSharedElementStart(List<String> sharedElementNames, List<View> sharedElements, List<View> sharedElementSnapshots) {
+            super.onSharedElementStart(sharedElementNames, sharedElements, sharedElementSnapshots);
+        }
+
+        @Override
+        public void onSharedElementEnd(List<String> sharedElementNames, List<View> sharedElements, List<View> sharedElementSnapshots) {
+            super.onSharedElementEnd(sharedElementNames, sharedElements, sharedElementSnapshots);
+        }
+
+        @Override
+        public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
+            super.onMapSharedElements(names, sharedElements);
+            Logger.d("onMapSharedElements");
+        }
+
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Fresco.initialize(this);
+        CrashWoodpecker.fly().to(this);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        setExitSharedElementCallback(mCallback);
 
         GlobalGlass.Initialize(getApplicationContext());
 
@@ -151,6 +180,12 @@ public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOf
         super.onConfigurationChanged(newConfig);
 
         drawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public void onActivityReenter(int requestCode, Intent data) {
+        super.onActivityReenter(requestCode, data);
+        Logger.d("onActivityReenter");
     }
 
     //Fix CoordinatorLayout and SwipeRefreshLayout conflict

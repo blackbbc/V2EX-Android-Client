@@ -1,5 +1,7 @@
 package me.sweetll.v2ex.Adapter;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -21,6 +23,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import me.sweetll.v2ex.DataStructure.Post;
 import me.sweetll.v2ex.DetailActivity;
+import me.sweetll.v2ex.MainActivity;
 import me.sweetll.v2ex.R;
 
 /**
@@ -66,19 +69,29 @@ public class ArticleListRecyclerViewAdapter extends RecyclerView.Adapter<Article
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.listTitle.setText(mData.get(position).getTitle());
-        holder.listAuthor.setText(mData.get(position).getUserName());
-        holder.listTime.setText(mData.get(position).getTime());
-        holder.listNode.setText(mData.get(position).getTag());
-        holder.listReply.setText(mData.get(position).getReply());
-        holder.listAvatar.setImageURI(Uri.parse(mData.get(position).getImageSrc()));
+        Post post = mData.get(position);
+
+        holder.listTitle.setText(post.getTitle());
+        holder.listAuthor.setText(post.getUserName());
+        holder.listTime.setText(post.getTime());
+        holder.listNode.setText(post.getTag());
+        holder.listReply.setText(post.getReply());
+
+        holder.listAvatar.setImageURI(Uri.parse(post.getImageSrc()));
+        holder.listAvatar.setTransitionName(post.getTitle() + post.getUserName());
+        holder.listAvatar.setTag(post.getTitle() + post.getUserName());
+
         holder.listCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Parcelable articleData = Parcels.wrap(mData.get(position));
                 Intent intent = new Intent(context, DetailActivity.class);
                 intent.putExtra("article_data", articleData);
-                context.startActivity(intent);
+                intent.putExtra("position", position);
+                MainActivity mainActivity = (MainActivity) context;
+                context.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(
+                        mainActivity, holder.listAvatar, holder.listAvatar.getTransitionName()).toBundle()
+                );
             }
         });
     }

@@ -1,7 +1,9 @@
 package me.sweetll.v2ex.Adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Animatable;
 import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -9,7 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.facebook.common.logging.FLog;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.controller.BaseControllerListener;
+import com.facebook.drawee.controller.ControllerListener;
+import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.image.ImageInfo;
+import com.facebook.imagepipeline.image.QualityInfo;
 
 import java.util.ArrayList;
 
@@ -18,6 +27,7 @@ import butterknife.ButterKnife;
 import me.sweetll.v2ex.DataStructure.Content;
 import me.sweetll.v2ex.DataStructure.Post;
 import me.sweetll.v2ex.DataStructure.Reply;
+import me.sweetll.v2ex.DetailActivity;
 import me.sweetll.v2ex.R;
 
 /**
@@ -32,6 +42,30 @@ public class ArticleDetailRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
         TYPE_DETAIL,
         TYPE_REPLY
     }
+
+    ControllerListener controllerListener = new BaseControllerListener<ImageInfo>() {
+        @Override
+        public void onFinalImageSet(
+                String id,
+                @Nullable ImageInfo imageInfo,
+                @Nullable Animatable anim) {
+            if (imageInfo == null) {
+                return;
+            }
+
+            ((DetailActivity)context).startPostponedEnterTransition();
+        }
+
+        @Override
+        public void onIntermediateImageSet(String id, @Nullable ImageInfo imageInfo) {
+//            FLog.d("Intermediate image received");
+        }
+
+        @Override
+        public void onFailure(String id, Throwable throwable) {
+//            FLog.e(getClass(), throwable, "Error loading %s", id);
+        }
+    };
 
     public static class ContentViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.content_ps) TextView contentPs;
@@ -99,7 +133,16 @@ public class ArticleDetailRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
         if (holder instanceof DetailViewHolder) {
             Post post = (Post)mData.get(position);
             ((DetailViewHolder) holder).detailAuthor.setText(post.getUserName());
-            ((DetailViewHolder) holder).detailAvatar.setImageURI(Uri.parse(post.getImageSrc()));
+
+            Uri uri = Uri.parse(post.getImageSrc());
+            DraweeController controller = Fresco.newDraweeControllerBuilder()
+                    .setControllerListener(controllerListener)
+                    .setUri(uri)
+                    .build();
+            ((DetailViewHolder) holder).detailAvatar.setController(controller);
+            ((DetailViewHolder) holder).detailAvatar.setTransitionName(post.getTitle() + post.getUserName());
+            ((DetailViewHolder) holder).detailAvatar.setTag(post.getTitle() + post.getUserName());
+
             ((DetailViewHolder) holder).detailTime.setText(post.getTime());
             ((DetailViewHolder) holder).detailTitle.setText(post.getTitle());
         } else if(holder instanceof ContentViewHolder) {

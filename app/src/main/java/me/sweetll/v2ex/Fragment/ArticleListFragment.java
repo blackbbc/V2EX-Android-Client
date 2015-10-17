@@ -81,7 +81,7 @@ public class ArticleListFragment extends Fragment {
 
         @Override
         public void run() {
-            Logger.d("I'm on runnable");
+//            Logger.d("I'm on runnable");
 
             Document document = Jsoup.parse(response);
 

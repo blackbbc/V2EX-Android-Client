@@ -1,17 +1,27 @@
 package me.sweetll.v2ex;
 
+import android.app.SharedElementCallback;
+import android.graphics.drawable.Animatable;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewTreeObserver;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.facebook.common.logging.FLog;
+import com.facebook.drawee.controller.BaseControllerListener;
+import com.facebook.drawee.controller.ControllerListener;
+import com.facebook.imagepipeline.image.ImageInfo;
+import com.facebook.imagepipeline.image.QualityInfo;
 import com.orhanobut.logger.Logger;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
@@ -23,6 +33,8 @@ import org.parceler.Parcels;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -41,11 +53,31 @@ public class DetailActivity extends AppCompatActivity implements FitWindowView.O
     private ArticleDetailRecyclerViewAdapter detailRecyclerViewAdapter;
     private String url;
 
+    private SharedElementCallback mCallback = new SharedElementCallback() {
+        @Override
+        public void onSharedElementStart(List<String> sharedElementNames, List<View> sharedElements, List<View> sharedElementSnapshots) {
+            super.onSharedElementStart(sharedElementNames, sharedElements, sharedElementSnapshots);
+        }
+
+        @Override
+        public void onSharedElementEnd(List<String> sharedElementNames, List<View> sharedElements, List<View> sharedElementSnapshots) {
+            super.onSharedElementEnd(sharedElementNames, sharedElements, sharedElementSnapshots);
+        }
+
+        @Override
+        public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
+            super.onMapSharedElements(names, sharedElements);
+            Logger.d("onMapSharedElements");
+        }
+
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         ButterKnife.bind(this);
+        setEnterSharedElementCallback(mCallback);
 
         mStandard.addOnFitSystemWindowsListener(this);
 
@@ -57,9 +89,18 @@ public class DetailActivity extends AppCompatActivity implements FitWindowView.O
         detailRecyclerViewAdapter.add(post);
         detailRecyclerView.addItemDecoration(
                 new HorizontalDividerItemDecoration.Builder(this)
-                .build());
+                        .build());
         detailRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         detailRecyclerView.setAdapter(detailRecyclerViewAdapter);
+
+        postponeEnterTransition();
+        getWindow().getDecorView().getRootView().getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+//                startPostponedEnterTransition();
+                return true;
+            }
+        });
 
         url = post.getSrc();
         stringRequest = new StringRequest(Request.Method.GET, url,
@@ -114,7 +155,7 @@ public class DetailActivity extends AppCompatActivity implements FitWindowView.O
                     detailRecyclerViewAdapter.add(new Reply(reply_imageSrc, reply_author, reply_time, reply_content));
                 }
 
-                detailRecyclerViewAdapter.notifyDataSetChanged();
+//                detailRecyclerViewAdapter.notifyDataSetChanged();
 
                 }
             }, new Response.ErrorListener() {
