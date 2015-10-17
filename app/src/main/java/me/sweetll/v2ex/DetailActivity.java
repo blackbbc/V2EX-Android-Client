@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.transition.Transition;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -94,11 +95,30 @@ public class DetailActivity extends AppCompatActivity implements FitWindowView.O
         detailRecyclerView.setAdapter(detailRecyclerViewAdapter);
 
         postponeEnterTransition();
-        getWindow().getDecorView().getRootView().getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+        getWindow().getSharedElementEnterTransition().addListener(new Transition.TransitionListener() {
             @Override
-            public boolean onPreDraw() {
-//                startPostponedEnterTransition();
-                return true;
+            public void onTransitionStart(Transition transition) {
+
+            }
+
+            @Override
+            public void onTransitionEnd(Transition transition) {
+                GlobalGlass.getQueue().add(stringRequest);
+            }
+
+            @Override
+            public void onTransitionCancel(Transition transition) {
+
+            }
+
+            @Override
+            public void onTransitionPause(Transition transition) {
+
+            }
+
+            @Override
+            public void onTransitionResume(Transition transition) {
+
             }
         });
 
@@ -155,7 +175,7 @@ public class DetailActivity extends AppCompatActivity implements FitWindowView.O
                     detailRecyclerViewAdapter.add(new Reply(reply_imageSrc, reply_author, reply_time, reply_content));
                 }
 
-//                detailRecyclerViewAdapter.notifyDataSetChanged();
+                detailRecyclerViewAdapter.notifyDataSetChanged();
 
                 }
             }, new Response.ErrorListener() {
@@ -164,8 +184,6 @@ public class DetailActivity extends AppCompatActivity implements FitWindowView.O
                     Logger.d("Volley Error");
             }
         });
-
-        GlobalGlass.getQueue().add(stringRequest);
 
     }
 
