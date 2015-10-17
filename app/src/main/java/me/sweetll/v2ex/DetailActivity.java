@@ -21,11 +21,15 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.parceler.Parcels;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import me.sweetll.v2ex.Adapter.ArticleDetailRecyclerViewAdapter;
 import me.sweetll.v2ex.DataStructure.Content;
 import me.sweetll.v2ex.DataStructure.Post;
+import me.sweetll.v2ex.DataStructure.Reply;
 import me.sweetll.v2ex.Utils.GlobalGlass;
 import me.sweetll.v2ex.Widget.FitWindowView;
 
@@ -67,15 +71,12 @@ public class DetailActivity extends AppCompatActivity implements FitWindowView.O
                 String detail_ps;
                 String detail_body;
 
-                String reply_author;
-                String reply_time;
-                String reply_content;
-                String reply_imageSrc;
-
                 //首先分析content
                 detail_body = document.select("div.topic_content").html();
-                Content body = new Content(detail_body);
-                detailRecyclerViewAdapter.add(body);
+                if (!detail_body.isEmpty()) {
+                    Content body = new Content(detail_body);
+                    detailRecyclerViewAdapter.add(body);
+                }
                 //然后分析附言
                 Elements subtles = document.select("div.subtle");
                 for (Element subtle : subtles) {
@@ -87,26 +88,31 @@ public class DetailActivity extends AppCompatActivity implements FitWindowView.O
 
                 //最后分析reply
 
-//                Elements cells = document.select("div.cell.item");
-//                for (Element cell : cells) {
-//                    list_src = cell.select("span.item_title>a").first().attr("href").split("#")[0];
-//                    list_imageSrc = cell.select("img.avatar").first().attr("src");
-//                    list_title = cell.select("span.item_title>a").first().text();
-//                    list_tag = cell.select("a.node").first().text();
-//                    list_userName = cell.select("strong").first().text();
-//                    list_reply = cell.select("a.count_livid").text();
-//                    list_reply = list_reply.isEmpty()? "0": list_reply;
-//                    String small_fade = cell.select("span.small.fade").eq(1).text();
-//                    list_time = small_fade.split(" \u00a0•\u00a0 ")[0];
-//
-//                    try {
-//                        list_src = new URL(new URL(url), list_src).toString();
-//                        list_imageSrc = new URL(new URL(url), list_imageSrc).toString();
-//                    } catch (MalformedURLException e) {
-//                        e.printStackTrace();
-//                    }
-//                    recyclerViewAdapter.add(new Post(list_title, list_userName, list_time, list_tag, list_reply, list_imageSrc, list_src));
-//                }
+                String reply_author;
+                String reply_time;
+                String reply_content;
+                String reply_imageSrc;
+
+                Elements cells = document.select("div.box").eq(1);
+                cells = cells.select("div.box>div");
+                cells.remove(0);
+                for (Element cell : cells) {
+                    try {
+                        reply_author = cell.select("a").first().text();
+                        reply_time = cell.select("span.fade.small").first().text();
+                        reply_imageSrc = cell.select("img").first().attr("src");
+                        reply_content = cell.select("div.reply_content").first().text();
+                    } catch (NullPointerException e) {
+                        continue;
+                    }
+
+                    try {
+                        reply_imageSrc = new URL(new URL(url), reply_imageSrc).toString();
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    }
+                    detailRecyclerViewAdapter.add(new Reply(reply_imageSrc, reply_author, reply_time, reply_content));
+                }
 
                 detailRecyclerViewAdapter.notifyDataSetChanged();
 
