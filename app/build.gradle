@@ -29,11 +29,11 @@ repositories {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:23.0.1'
-    compile 'com.android.support:recyclerview-v7:23.0.1'
-    compile 'com.android.support:cardview-v7:23.0.1'
-    compile 'com.android.support:design:23.0.1'
-    compile 'com.android.support:percent:23.0.1'
+    compile 'com.android.support:appcompat-v7:23.1.0'
+    compile 'com.android.support:recyclerview-v7:23.1.0'
+    compile 'com.android.support:cardview-v7:23.1.0'
+    compile 'com.android.support:design:23.1.0'
+    compile 'com.android.support:percent:23.1.0'
     //must have libraries
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.orhanobut:logger:1.11'
@@ -42,6 +42,7 @@ dependencies {
     debugCompile 'me.drakeet.library:crashwoodpecker:0.9.7'
     releaseCompile 'me.drakeet.library:crashwoodpecker-do-nothing:0.9.7'
     //3rd-party libraries
+    compile 'jp.wasabeef:recyclerview-animators:2.0.0'
     compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
     compile 'de.hdodenhof:circleimageview:1.3.0'
     compile 'com.github.recruit-lifestyle:WaveSwipeRefreshLayout:1.2'

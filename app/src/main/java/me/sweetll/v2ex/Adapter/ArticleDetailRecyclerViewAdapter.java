@@ -105,6 +105,7 @@ public class ArticleDetailRecyclerViewAdapter extends RecyclerView.Adapter<Recyc
 
     public void add(Object newObject) {
         mData.add(newObject);
+        notifyItemInserted(mData.size() - 1);
     }
 
     public void clear() {

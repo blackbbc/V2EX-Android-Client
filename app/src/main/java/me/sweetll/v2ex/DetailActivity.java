@@ -8,7 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.transition.Slide;
 import android.transition.Transition;
+import android.transition.TransitionSet;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,6 +42,7 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
 import me.sweetll.v2ex.Adapter.ArticleDetailRecyclerViewAdapter;
 import me.sweetll.v2ex.DataStructure.Content;
 import me.sweetll.v2ex.DataStructure.Post;
@@ -73,6 +77,18 @@ public class DetailActivity extends AppCompatActivity implements FitWindowView.O
 
     };
 
+    private Transition makeEnterTransition() {
+        TransitionSet enterTransition = new TransitionSet();
+
+        // Slide the cards in through the top of the screen.
+        Transition cardSlideBottom = new Slide(Gravity.TOP);
+        cardSlideBottom.addTarget(findViewById(R.id.article_detail));
+        enterTransition.addTransition(cardSlideBottom);
+
+        enterTransition.setDuration(getResources().getInteger(R.integer.transition_duration_millis));
+        return enterTransition;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,6 +109,7 @@ public class DetailActivity extends AppCompatActivity implements FitWindowView.O
                         .build());
         detailRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         detailRecyclerView.setAdapter(detailRecyclerViewAdapter);
+        detailRecyclerView.setItemAnimator(new FadeInUpAnimator());
 
         postponeEnterTransition();
         getWindow().getSharedElementEnterTransition().addListener(new Transition.TransitionListener() {
@@ -174,8 +191,6 @@ public class DetailActivity extends AppCompatActivity implements FitWindowView.O
                     }
                     detailRecyclerViewAdapter.add(new Reply(reply_imageSrc, reply_author, reply_time, reply_content));
                 }
-
-                detailRecyclerViewAdapter.notifyDataSetChanged();
 
                 }
             }, new Response.ErrorListener() {
