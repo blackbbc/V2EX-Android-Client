@@ -1,103 +1,49 @@
-<android.support.v4.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.mxn.soul.flowingdrawer_core.LeftDrawerLayout
+    android:id="@+id/id_drawerlayout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
-    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent"
+    android:clipChildren="false" >
 
+    <!--content-->
     <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <android.support.design.widget.AppBarLayout
+            android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
-            android:layout_height="82dp"
-            android:fitsSystemWindows="true"
-            android:id="@+id/appbar_layout">
+            android:layout_height="wrap_content">
 
-            <android.support.design.widget.CollapsingToolbarLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:minHeight="?attr/actionBarSize"
-                android:fitsSystemWindows="true"
-                app:layout_scrollFlags="scroll|enterAlwaysCollapsed|enterAlways">
-
-                <!-- The ActionBar -->
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_height="?attr/actionBarSize"
-                    android:layout_width="match_parent"
-                    android:background="?attr/colorPrimary"
-                    android:fitsSystemWindows="false"
-                    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                    app:layout_collapseMode="pin"
-                    app:layout_scrollFlags="scroll|enterAlways">
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:paddingTop="16dp">
-
-                        <ImageView
-                            android:id="@+id/search_view"
-                            android:layout_width="match_parent"
-                            android:layout_height="24dp"
-                            android:src="@drawable/search_bar"/>
-
-                        <EditText
-                            android:id="@+id/search_edit_text"
-                            android:layout_width="match_parent"
-                            android:layout_height="22dp"
-                            android:paddingStart="4dp"
-                            android:background="@null"/>
-                    </FrameLayout>
-
-                    </android.support.v7.widget.Toolbar>
-
-                </android.support.design.widget.CollapsingToolbarLayout>
-
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar" />
         </android.support.design.widget.AppBarLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-            <com.astuetz.PagerSlidingTabStrip
-                android:id="@+id/tabs"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:textColor="#FFFFFF"
-                android:background="?attr/colorPrimary"
-                app:pstsIndicatorColor="?attr/colorAccent"
-                app:pstsIndicatorHeight="3dp"
-                app:pstsShouldExpand="true"
-                app:pstsTextAllCaps="true">
-            </com.astuetz.PagerSlidingTabStrip>
-
-            <android.support.v4.view.ViewPager
-                android:id="@+id/viewpager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/background_material_light">
-            </android.support.v4.view.ViewPager>
-
-        </LinearLayout>
 
     </android.support.design.widget.CoordinatorLayout>
 
-    <!-- The navigation drawer -->
-    <android.support.design.widget.NavigationView
-        android:id="@+id/nvView"
-        android:layout_width="wrap_content"
+
+    <!--menu-->
+    <RelativeLayout
+        android:layout_width="280dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@android:color/white"
-        app:headerLayout="@layout/nav_header"
-        app:menu="@menu/drawer_view" />
+        android:clipChildren="false" >
 
-</android.support.v4.widget.DrawerLayout>
+        <com.mxn.soul.flowingdrawer_core.FlowingView
+            android:id="@+id/sv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <FrameLayout
+            android:id="@+id/id_container_menu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true" />
+
+    </RelativeLayout>
+
+</com.mxn.soul.flowingdrawer_core.LeftDrawerLayout>
