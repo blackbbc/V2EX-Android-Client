@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOf
     private float offset;
     private Interpolator interpolator;
     private int duration;
-    private boolean expanded = true;
+    private boolean expanded = false;
 
     private SharedElementCallback mCallback = new SharedElementCallback() {
         @Override
@@ -112,8 +112,6 @@ public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOf
 
         offset = 0f * (int) getResources().getDisplayMetrics().scaledDensity;
         searchView.setTranslationX(offset);
-
-        animate();
     }
 
     @OnClick(R.id.search_view)

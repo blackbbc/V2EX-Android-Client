@@ -45,13 +45,14 @@
                             android:id="@+id/search_view"
                             android:layout_width="match_parent"
                             android:layout_height="24dp"
-                            android:src="@drawable/search_bar"/>
+                            android:src="@drawable/search"/>
 
                         <EditText
                             android:id="@+id/search_edit_text"
                             android:layout_width="match_parent"
                             android:layout_height="22dp"
                             android:paddingStart="4dp"
+                            android:visibility="invisible"
                             android:background="@null"/>
                     </FrameLayout>
 
