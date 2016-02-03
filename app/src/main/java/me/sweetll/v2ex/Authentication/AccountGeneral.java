@@ -8,6 +8,7 @@ public class AccountGeneral {
     public static final String ACCOUNT_NAME = "V2EX";
     public static final String AUTH_TOKEN_TYPE = "FULL access";
     public static final String AUTH_TOKEN_TYPE_LABEL = "FULL access to v2ex account";
+    public static final String PREF_ACCOUNT = "PREF_ACCOUNT";
 
     public static final ServerAuthenticate mServerAuthenticate = new V2EXServerAuthenticate();
 }

@@ -1,19 +1,25 @@
 package me.sweetll.v2ex;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.SharedElementCallback;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -37,6 +43,7 @@ import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.drakeet.library.CrashWoodpecker;
 import me.sweetll.v2ex.Adapter.ArticleListFragmentAdapter;
+import me.sweetll.v2ex.Authentication.AccountGeneral;
 import me.sweetll.v2ex.Fragment.ArticleListFragment;
 import me.sweetll.v2ex.Utils.GlobalClass;
 
@@ -53,6 +60,8 @@ public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOf
     private AnimatedVectorDrawable barToSearch;
     private ActionBarDrawerToggle drawerToggle;
     private ArticleListFragmentAdapter viewPagerAdapter;
+
+    private AccountManager mAccountManager;
 
     //For Search View
     private float offset;
@@ -88,6 +97,8 @@ public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOf
         ButterKnife.bind(this);
         setExitSharedElementCallback(mCallback);
 
+        mAccountManager = AccountManager.get(this);
+
         GlobalClass.Initialize(getApplicationContext());
 
         setSupportActionBar(toolbar);
@@ -112,6 +123,30 @@ public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOf
         });
 
         initSearchView();
+        refreshStatus();
+    }
+
+    private void refreshStatus() {
+        SharedPreferences sharedPref = getSharedPreferences(AccountGeneral.PREF_ACCOUNT, Context.MODE_PRIVATE);
+        String accountName = sharedPref.getString(AccountManager.KEY_ACCOUNT_NAME, null);
+        if (!TextUtils.isEmpty(accountName)) {
+            Account account = getAccountByName(accountName);
+            if (account != null) {
+                //Get Username and Avatar
+//                Snackbar.make(drawerLayout, "" + accountName, Snackbar.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Nullable
+    private Account getAccountByName(String accountName) {
+        final Account availableAccounts[] = mAccountManager.getAccountsByType(AccountGeneral.ACCOUNT_TYPE);
+        for (Account account : availableAccounts) {
+            if (account.name.equals(accountName)) {
+                return account;
+            }
+        }
+        return null;
     }
 
     @Override
@@ -120,6 +155,7 @@ public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOf
             case GlobalClass.REQUEST_SIGN_IN:
                 switch (resultCode) {
                     case GlobalClass.RESULT_SUCCESS:
+                        refreshStatus();
                         break;
                     case GlobalClass.RESULT_FAILURE:
                         break;

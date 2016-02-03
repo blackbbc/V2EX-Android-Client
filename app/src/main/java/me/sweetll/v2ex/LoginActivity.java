@@ -25,8 +25,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.orhanobut.logger.Logger;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import me.sweetll.v2ex.Authentication.AccountGeneral;
 import me.sweetll.v2ex.Utils.GlobalClass;
 
 import static me.sweetll.v2ex.Authentication.AccountGeneral.ACCOUNT_TYPE;
@@ -206,7 +209,7 @@ public class LoginActivity extends AppCompatActivity {
             Bundle data = new Bundle();
 
             try {
-                authToken = mServerAuthenticate.userSignin(mUsername, mPassword, AUTH_TOKEN_TYPE);
+                authToken = mServerAuthenticate.userSignIn(mUsername, mPassword, AUTH_TOKEN_TYPE);
 
                 data.putString(AccountManager.KEY_ACCOUNT_TYPE, ACCOUNT_TYPE);
                 data.putString(AccountManager.KEY_ACCOUNT_NAME, mUsername);
@@ -253,7 +256,7 @@ public class LoginActivity extends AppCompatActivity {
         mAccountManager.addAccountExplicitly(account, accountPassword, null);
         mAccountManager.setAuthToken(account, authTokenType, authToken);
 
-        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = getSharedPreferences(AccountGeneral.PREF_ACCOUNT, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(AccountManager.KEY_ACCOUNT_NAME, accountName);
         editor.commit();
