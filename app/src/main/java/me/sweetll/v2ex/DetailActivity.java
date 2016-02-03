@@ -1,9 +1,7 @@
 package me.sweetll.v2ex;
 
 import android.app.SharedElementCallback;
-import android.graphics.drawable.Animatable;
 import android.os.Parcelable;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,17 +13,11 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewTreeObserver;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.facebook.common.logging.FLog;
-import com.facebook.drawee.controller.BaseControllerListener;
-import com.facebook.drawee.controller.ControllerListener;
-import com.facebook.imagepipeline.image.ImageInfo;
-import com.facebook.imagepipeline.image.QualityInfo;
 import com.orhanobut.logger.Logger;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
@@ -47,7 +39,7 @@ import me.sweetll.v2ex.Adapter.ArticleDetailRecyclerViewAdapter;
 import me.sweetll.v2ex.DataStructure.Content;
 import me.sweetll.v2ex.DataStructure.Post;
 import me.sweetll.v2ex.DataStructure.Reply;
-import me.sweetll.v2ex.Utils.GlobalGlass;
+import me.sweetll.v2ex.Utils.GlobalClass;
 import me.sweetll.v2ex.Widget.FitWindowView;
 
 public class DetailActivity extends AppCompatActivity implements FitWindowView.OnFitSystemWindowsListener{
@@ -120,7 +112,7 @@ public class DetailActivity extends AppCompatActivity implements FitWindowView.O
 
             @Override
             public void onTransitionEnd(Transition transition) {
-                GlobalGlass.getQueue().add(stringRequest);
+                GlobalClass.getQueue().add(stringRequest);
             }
 
             @Override

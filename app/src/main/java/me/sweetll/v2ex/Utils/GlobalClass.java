@@ -10,7 +10,13 @@ import me.sweetll.v2ex.MainActivity;
 /**
  * Created by sweet on 15-9-5.
  */
-public class GlobalGlass {
+public class GlobalClass {
+    public static final int REQUEST_SIGN_IN = 10;
+    public static final int REQUEST_SIGN_UP = 20;
+
+    public static final int RESULT_SUCCESS = 10;
+    public static final int RESULT_FAILURE = 20;
+
     public static RequestQueue queue;
 
     public static void Initialize(Context context) {

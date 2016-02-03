@@ -1,26 +1,20 @@
 package me.sweetll.v2ex.Fragment;
 
-import android.app.Activity;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.orhanobut.logger.Logger;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
@@ -31,8 +25,6 @@ import org.jsoup.select.Elements;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -40,7 +32,7 @@ import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
 import me.sweetll.v2ex.Adapter.ArticleListRecyclerViewAdapter;
 import me.sweetll.v2ex.DataStructure.Post;
 import me.sweetll.v2ex.R;
-import me.sweetll.v2ex.Utils.GlobalGlass;
+import me.sweetll.v2ex.Utils.GlobalClass;
 
 /**
  * Created by sweet on 15-8-17.
@@ -128,7 +120,7 @@ public class ArticleListFragment extends Fragment {
     }
 
     private void refreshList() {
-        GlobalGlass.getQueue().add(stringRequest);
+        GlobalClass.getQueue().add(stringRequest);
     }
 
     public static ArticleListFragment newInstance(int page) {

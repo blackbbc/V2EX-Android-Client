@@ -10,9 +10,9 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/circle_image_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/avatar"/>
+        android:layout_width="74dp"
+        android:layout_height="74dp"
+        android:src="@drawable/default_avatar"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -21,7 +21,7 @@
         android:layout_alignRight="@id/circle_image_view"
         android:layout_below="@id/circle_image_view"
         android:layout_marginTop="5dp"
-        android:text="blackbbc"
+        android:text="登陆"
         android:textColor="@android:color/white"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:id="@+id/header_username"

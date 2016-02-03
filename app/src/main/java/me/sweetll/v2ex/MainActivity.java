@@ -4,13 +4,10 @@ import android.app.SharedElementCallback;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.graphics.Matrix;
-import android.graphics.RectF;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.NavigationView;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -37,10 +34,11 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 import me.drakeet.library.CrashWoodpecker;
 import me.sweetll.v2ex.Adapter.ArticleListFragmentAdapter;
 import me.sweetll.v2ex.Fragment.ArticleListFragment;
-import me.sweetll.v2ex.Utils.GlobalGlass;
+import me.sweetll.v2ex.Utils.GlobalClass;
 
 public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener {
     @Bind(R.id.drawer_layout) DrawerLayout drawerLayout;
@@ -50,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOf
     @Bind(R.id.appbar_layout) AppBarLayout appBarLayout;
     @Bind(R.id.search_view) ImageView searchView;
     @Bind(R.id.search_edit_text) EditText searchEditText;
+    @Bind(R.id.nvView) NavigationView navigationView;
     private AnimatedVectorDrawable searchToBar;
     private AnimatedVectorDrawable barToSearch;
     private ActionBarDrawerToggle drawerToggle;
@@ -89,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOf
         ButterKnife.bind(this);
         setExitSharedElementCallback(mCallback);
 
-        GlobalGlass.Initialize(getApplicationContext());
+        GlobalClass.Initialize(getApplicationContext());
 
         setSupportActionBar(toolbar);
         drawerToggle = setupDrawerToggle();
@@ -100,7 +99,35 @@ public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOf
         viewPager.setOffscreenPageLimit(11);
         tabStrip.setViewPager(viewPager);
 
+        View headerView = navigationView.getHeaderView(0);
+        CircleImageView circleImageView = (CircleImageView) headerView.findViewById(R.id.circle_image_view);
+
+        circleImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this, LoginActivity.class);
+                startActivityForResult(intent, GlobalClass.REQUEST_SIGN_IN);
+            }
+        });
+
         initSearchView();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case GlobalClass.REQUEST_SIGN_IN:
+                switch (resultCode) {
+                    case GlobalClass.RESULT_SUCCESS:
+                        break;
+                    case GlobalClass.RESULT_FAILURE:
+                        break;
+                }
+                break;
+            case GlobalClass.REQUEST_SIGN_UP:
+                break;
+        }
     }
 
     void initSearchView() {
