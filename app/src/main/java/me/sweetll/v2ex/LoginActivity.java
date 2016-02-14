@@ -9,6 +9,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.AsyncTask;
@@ -19,6 +20,7 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.AccelerateInterpolator;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -29,6 +31,8 @@ import com.orhanobut.logger.Logger;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import io.codetail.animation.arcanimator.ArcAnimator;
+import io.codetail.animation.arcanimator.Side;
 import me.sweetll.v2ex.Authentication.AccountGeneral;
 import me.sweetll.v2ex.Utils.GlobalClass;
 
@@ -51,7 +55,9 @@ public class LoginActivity extends AppCompatActivity {
     @Bind(R.id.login_form) View mProgressView;
     @Bind(R.id.login_progress) View mLoginFormView;
     @Bind(R.id.sign_in_button) Button mSignInButton;
+    @Bind(R.id.sign_up_toggle_button) FloatingActionButton mSignUpToggleButton;
 
+    private Boolean isSignUpShow = false;
     private AccountManager mAccountManager;
 
     @Override
@@ -81,6 +87,33 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        mSignUpToggleButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isSignUpShow) {
+                    showSignUp();
+                    isSignUpShow = true;
+                } else {
+                    hideSignUp();
+                    isSignUpShow = false;
+                }
+            }
+        });
+
+    }
+
+    private void showSignUp() {
+        ArcAnimator mArcAnimator = ArcAnimator.createArcAnimator(mSignUpToggleButton, 880, 750, 180, Side.LEFT)
+                .setDuration(400);
+        mArcAnimator.setInterpolator(new AccelerateInterpolator());
+        mArcAnimator.start();
+    }
+
+    private void hideSignUp() {
+        ArcAnimator mArcAnimator = ArcAnimator.createArcAnimator(mSignUpToggleButton, 960, 780, 180, Side.LEFT)
+                .setDuration(400);
+        mArcAnimator.setInterpolator(new AccelerateInterpolator());
+        mArcAnimator.start();
     }
 
     private void addNewAccount(String accountType, String authTokenType) {

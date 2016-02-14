@@ -32,7 +32,14 @@ import android.widget.ImageView;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.franmontiel.persistentcookiejar.ClearableCookieJar;
+import com.franmontiel.persistentcookiejar.PersistentCookieJar;
+import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
+import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.orhanobut.logger.Logger;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 import java.util.List;
@@ -47,8 +54,10 @@ import me.sweetll.v2ex.Adapter.ArticleListFragmentAdapter;
 import me.sweetll.v2ex.Authentication.AccountGeneral;
 import me.sweetll.v2ex.Fragment.ArticleListFragment;
 import me.sweetll.v2ex.Utils.GlobalClass;
+import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener {
@@ -129,26 +138,45 @@ public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOf
         initSearchView();
         refreshStatus();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                //Begin to test
-                try {
-                    String url = "http://www.baidu.com";
-                    OkHttpClient okHttpClient = new OkHttpClient();
-
-                    okHttpClient.cookieJar();
-
-                    Request request = new Request.Builder()
-                            .url(url)
-                            .build();
-                    Response response = okHttpClient.newCall(request).execute();
-                    System.out.println(response.body().string());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                Begin to test
+//                try {
+//                    String url = "http://www.v2ex.com/signin";
+//                    ClearableCookieJar cookieJar =
+//                            new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(getApplicationContext()));
+//
+//                    OkHttpClient okHttpClient = new OkHttpClient.Builder()
+//                            .cookieJar(cookieJar)
+//                            .build();
+//
+//                    Request request = new Request.Builder()
+//                            .url(url)
+//                            .build();
+//
+//                    Response response = okHttpClient.newCall(request).execute();
+//                    Document document = Jsoup.parse(response.body().string());
+//                    String once = document.select("input[name=once]").first().val();
+//                    Logger.d("" + once);
+//
+//                    RequestBody body = new FormBody.Builder()
+//                            .add("u", "blackbbc")
+//                            .add("p", "e1e1e1")
+//                            .add("once", once)
+//                            .add("next", "/")
+//                            .build();
+//                    request = new Request.Builder()
+//                            .url(url)
+//                            .post(body)
+//                            .build();
+//                    response = okHttpClient.newCall(request).execute();
+//                    Logger.d(response.body().string());
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
 
 
     }
