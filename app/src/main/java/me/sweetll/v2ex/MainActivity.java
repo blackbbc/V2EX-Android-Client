@@ -34,6 +34,7 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.orhanobut.logger.Logger;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -46,6 +47,9 @@ import me.sweetll.v2ex.Adapter.ArticleListFragmentAdapter;
 import me.sweetll.v2ex.Authentication.AccountGeneral;
 import me.sweetll.v2ex.Fragment.ArticleListFragment;
 import me.sweetll.v2ex.Utils.GlobalClass;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener {
     @Bind(R.id.drawer_layout) DrawerLayout drawerLayout;
@@ -124,6 +128,29 @@ public class MainActivity extends AppCompatActivity implements AppBarLayout.OnOf
 
         initSearchView();
         refreshStatus();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //Begin to test
+                try {
+                    String url = "http://www.baidu.com";
+                    OkHttpClient okHttpClient = new OkHttpClient();
+
+                    okHttpClient.cookieJar();
+
+                    Request request = new Request.Builder()
+                            .url(url)
+                            .build();
+                    Response response = okHttpClient.newCall(request).execute();
+                    System.out.println(response.body().string());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+
     }
 
     private void refreshStatus() {
