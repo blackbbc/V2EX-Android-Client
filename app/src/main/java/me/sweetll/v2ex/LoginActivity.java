@@ -16,6 +16,7 @@ import android.os.AsyncTask;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -56,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
     @Bind(R.id.login_progress) View mLoginFormView;
     @Bind(R.id.sign_in_button) Button mSignInButton;
     @Bind(R.id.sign_up_toggle_button) FloatingActionButton mSignUpToggleButton;
+    @Bind(R.id.sign_in_form) CardView mSignInForm;
 
     private Boolean isSignUpShow = false;
     private AccountManager mAccountManager;
@@ -107,6 +109,11 @@ public class LoginActivity extends AppCompatActivity {
                 .setDuration(400);
         mArcAnimator.setInterpolator(new AccelerateInterpolator());
         mArcAnimator.start();
+
+        mSignUpToggleButton.animate()
+                .rotation(45)
+                .setDuration(400)
+                .start();
     }
 
     private void hideSignUp() {
@@ -114,6 +121,11 @@ public class LoginActivity extends AppCompatActivity {
                 .setDuration(400);
         mArcAnimator.setInterpolator(new AccelerateInterpolator());
         mArcAnimator.start();
+
+        mSignUpToggleButton.animate()
+                .rotation(0)
+                .setDuration(400)
+                .start();
     }
 
     private void addNewAccount(String accountType, String authTokenType) {
