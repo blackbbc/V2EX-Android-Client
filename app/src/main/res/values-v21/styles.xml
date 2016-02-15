@@ -32,8 +32,17 @@
         <item name="colorAccent">@color/Accent</item>
 
         <item name="colorControlNormal">@color/Iron</item>
-        <!--<item name="colorControlActivated">@color/White</item>-->
-        <!--<item name="colorControlHighlight">@color/White</item>-->
+        <item name="android:textColorHint">@color/Iron</item>
+
+        <item name="android:windowBackground">@color/Primary</item>
+    </style>
+
+    <style name="AppLoginThemeDark" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/Primary</item>
+        <item name="colorPrimaryDark">@color/PrimaryDark</item>
+        <item name="colorAccent">@color/White</item>
+
+        <item name="colorControlNormal">@color/Iron</item>
         <item name="android:textColorHint">@color/Iron</item>
 
         <item name="android:windowBackground">@color/Primary</item>

@@ -81,6 +81,7 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.facebook.fresco/fbcore/0.6.1/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.facebook.fresco/fresco/0.6.1/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.facebook.fresco/imagepipeline/0.6.1/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.github.asyl.animation/arcanimator/1.0.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.github.dmytrodanylyk.android-process-button/library/1.0.4/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.github.recruit-lifestyle/WaveSwipeRefreshLayout/1.2/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.orhanobut/logger/1.11/jars" />
@@ -125,11 +126,13 @@
     <orderEntry type="library" exported="" name="retrofit-2.0.0-beta3" level="project" />
     <orderEntry type="library" exported="" name="WaveSwipeRefreshLayout-1.2" level="project" />
     <orderEntry type="library" exported="" name="cardview-v7-23.1.1" level="project" />
-    <orderEntry type="library" exported="" name="okhttp-3.0.1" level="project" />
     <orderEntry type="library" exported="" name="design-23.1.1" level="project" />
     <orderEntry type="library" exported="" name="pagerslidingtabstrip-1.0.1" level="project" />
+    <orderEntry type="library" exported="" name="arcanimator-1.0.0" level="project" />
     <orderEntry type="library" exported="" name="circleimageview-1.3.0" level="project" />
+    <orderEntry type="library" exported="" name="okhttp-3.1.2" level="project" />
     <orderEntry type="library" exported="" name="recyclerview-flexibledivider-1.2.5" level="project" />
     <orderEntry type="library" exported="" name="logger-1.11" level="project" />
+    <orderEntry type="module" module-name="okhttp3-persistent-cookiejar" exported="" />
   </component>
 </module>

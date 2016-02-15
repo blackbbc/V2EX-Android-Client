@@ -21,6 +21,7 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateInterpolator;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
@@ -56,8 +57,10 @@ public class LoginActivity extends AppCompatActivity {
     @Bind(R.id.login_form) View mProgressView;
     @Bind(R.id.login_progress) View mLoginFormView;
     @Bind(R.id.sign_in_button) Button mSignInButton;
-    @Bind(R.id.sign_up_toggle_button) FloatingActionButton mSignUpToggleButton;
     @Bind(R.id.sign_in_form) CardView mSignInForm;
+    @Bind(R.id.sign_up_button) Button mSignUpButton;
+    @Bind(R.id.sign_up_form) CardView mSignUpForm;
+    @Bind(R.id.sign_up_toggle_button) FloatingActionButton mSignUpToggleButton;
 
     private Boolean isSignUpShow = false;
     private AccountManager mAccountManager;
@@ -105,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void showSignUp() {
-        ArcAnimator mArcAnimator = ArcAnimator.createArcAnimator(mSignUpToggleButton, 880, 750, 180, Side.LEFT)
+        ArcAnimator mArcAnimator = ArcAnimator.createArcAnimator(mSignUpToggleButton, 880, 580, 180, Side.LEFT)
                 .setDuration(400);
         mArcAnimator.setInterpolator(new AccelerateInterpolator());
         mArcAnimator.start();
@@ -116,6 +119,21 @@ public class LoginActivity extends AppCompatActivity {
                 .start();
 
         mSignInForm.animate().scaleX(0.9f).scaleY(0.9f).start();
+
+        int cx = mSignUpForm.getWidth();
+        int cy = 350;
+        float finalRadius = (float) Math.hypot(cx, mSignInForm.getHeight() - cy);
+
+        Animator revealAnimator = ViewAnimationUtils.createCircularReveal(mSignUpForm, cx, cy, 0, finalRadius);
+        revealAnimator.setDuration(400).setInterpolator(new AccelerateInterpolator());
+        revealAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                super.onAnimationStart(animation);
+                mSignUpForm.setVisibility(View.VISIBLE);
+            }
+        });
+        revealAnimator.start();
     }
 
     private void hideSignUp() {
@@ -129,6 +147,22 @@ public class LoginActivity extends AppCompatActivity {
                 .setDuration(400)
                 .start();
         mSignInForm.animate().scaleX(1.0f).scaleY(1.0f).start();
+
+
+        int cx = mSignUpForm.getWidth() - 50;
+        int cy = 350;
+        float initialRadius = (float) Math.hypot(cx, mSignInForm.getHeight() - cy);
+
+        Animator revealAnimator = ViewAnimationUtils.createCircularReveal(mSignUpForm, cx, cy, initialRadius, 0);
+        revealAnimator.setDuration(400).setInterpolator(new AccelerateInterpolator());
+        revealAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                mSignUpForm.setVisibility(View.INVISIBLE);
+            }
+        });
+        revealAnimator.start();
     }
 
     private void addNewAccount(String accountType, String authTokenType) {

@@ -1,1 +1,2 @@
-include ':app'
+include ':app', ':okhttp3-persistent-cookiejar'
+project(':okhttp3-persistent-cookiejar').projectDir = new File('PersistentCookieJar/okhttp3-persistent-cookiejar')

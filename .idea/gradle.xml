@@ -9,6 +9,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/PersistentCookieJar/okhttp3-persistent-cookiejar" />
             <option value="$PROJECT_DIR$/app" />
           </set>
         </option>

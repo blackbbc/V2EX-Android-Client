@@ -39,7 +39,7 @@ public class V2EXServerAuthenticate implements ServerAuthenticate {
         document = Jsoup.parse(response.body().string());
 
         for (int i = 0; i < response.headers().size(); i++) {
-            Logger.d(response.headers().value(i));
+//            Logger.d(response.headers().value(i));
             if (response.headers().name(i).contains("Set-Cookie") && response.headers().value(i).contains("A2=")) {
                 Logger.d(response.headers().value(i));
                 return response.headers().value(i);
