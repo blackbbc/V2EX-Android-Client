@@ -114,6 +114,8 @@ public class LoginActivity extends AppCompatActivity {
                 .rotation(45)
                 .setDuration(400)
                 .start();
+
+        mSignInForm.animate().scaleX(0.9f).scaleY(0.9f).start();
     }
 
     private void hideSignUp() {
@@ -126,6 +128,7 @@ public class LoginActivity extends AppCompatActivity {
                 .rotation(0)
                 .setDuration(400)
                 .start();
+        mSignInForm.animate().scaleX(1.0f).scaleY(1.0f).start();
     }
 
     private void addNewAccount(String accountType, String authTokenType) {
